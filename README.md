@@ -108,7 +108,7 @@ Enable the repository hooks once per clone:
 git config core.hooksPath .githooks
 ```
 
-`pre-commit` rejects any staged file above 20,000 units, where units = bytes / 4 (≈ tokens, i.e. 80 KB). `Cargo.lock` is exempt; add other unavoidable exceptions to `is_excluded` in `.githooks/pre-commit`.
+`pre-commit` checks staged files only and rejects any file over 5,000 tokens (tokens = bytes / 4, i.e. 20,000 bytes), with step-by-step instructions for splitting it. Files not written by hand or by agents are skipped: lockfiles, generated code (`*.generated.*`, `*.pb.go`, `*.min.js`, …), vendored/build directories, license texts and binary files. Add other such patterns to `is_ignored` in `.githooks/pre-commit`.
 
 ## License
 

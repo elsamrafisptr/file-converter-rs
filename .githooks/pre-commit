@@ -1,30 +1,51 @@
 #!/usr/bin/env bash
-# Rejects commits containing files larger than MAX_UNITS, where units = bytes / 4
-# (a rough token count). Enable once per clone: git config core.hooksPath .githooks
-MAX_UNITS=20000
+# Rejects commits whose staged files exceed MAX_TOKENS, where tokens = bytes / 4.
+# Only staged content is checked (what will actually be committed), not the working tree.
+# Enable once per clone: git config core.hooksPath .githooks
+MAX_TOKENS=5000
 
-# Files allowed to exceed the limit: generated or verbatim content nobody should split.
-is_excluded() {
+# Files not authored by agents: lockfiles, generated code, vendored/legal text.
+is_ignored() {
 	case "$1" in
-	Cargo.lock) return 0 ;;
+	*.lock | package-lock.json | */package-lock.json | pnpm-lock.yaml | */pnpm-lock.yaml | go.sum | */go.sum) return 0 ;;
+	*.min.js | *.min.css | *.generated.* | *_generated.* | *.pb.go | *_pb2.py | *.g.dart | *.snap) return 0 ;;
+	target/* | vendor/* | */vendor/* | node_modules/* | dist/* | build/*) return 0 ;;
+	LICENSE | LICENSE.* | COPYING | COPYING.*) return 0 ;;
 	*) return 1 ;;
 	esac
 }
 
-failed=0
-# Staged (not working-tree) content of added/copied/modified/renamed files.
-git diff --cached --name-only --diff-filter=ACMR -z | {
-	while IFS= read -r -d '' file; do
-		is_excluded "$file" && continue
-		bytes=$(git cat-file -s ":$file")
-		units=$((bytes / 4))
-		if [ "$units" -gt "$MAX_UNITS" ]; then
-			echo "pre-commit: $file is $units units ($bytes bytes / 4), limit is $MAX_UNITS." >&2
-			failed=1
-		fi
-	done
-	if [ "$failed" -ne 0 ]; then
-		echo "pre-commit: split the file(s) above or add them to is_excluded in .githooks/pre-commit." >&2
-		exit 1
-	fi
-}
+too_big=()
+# numstat reports "-<TAB>-" for binary files; those are not authored text either.
+while IFS=$'\t' read -r -d '' added _deleted file; do
+	[ "$added" = "-" ] && continue
+	is_ignored "$file" && continue
+	bytes=$(git cat-file -s ":$file")
+	tokens=$((bytes / 4))
+	[ "$tokens" -gt "$MAX_TOKENS" ] && too_big+=("$file ($tokens tokens, $bytes bytes)")
+done < <(git diff --cached --numstat -z --diff-filter=ACMR --no-renames)
+
+[ ${#too_big[@]} -eq 0 ] && exit 0
+
+cat >&2 <<EOF
+pre-commit: these staged files exceed $MAX_TOKENS tokens (tokens = bytes / 4, i.e. $((MAX_TOKENS * 4)) bytes):
+$(printf '  - %s\n' "${too_big[@]}")
+
+Split each file before committing:
+  1. Find the seams: group the file's items (types, functions, sections) by the single job they do
+     together, e.g. "parsing", "CLI", "platform integration", "tests".
+  2. Move each group into its own file next to the original, named after that job. Each new file must
+     stay under $MAX_TOKENS tokens; aim for well below so it can grow.
+     - Rust: move items to src/<job>.rs and declare "mod <job>;" in the parent, or turn foo.rs into
+       foo/mod.rs plus foo/<job>.rs. Make moved items pub(crate) only where callers need them.
+     - Other code: create a sibling module and import it from the original file.
+     - Markdown/docs: move sections to docs/<topic>.md and link to them.
+     - Data/config: split into several files by top-level section and load them all.
+  3. Update every import/caller to the new location. Do not leave re-export shims or duplicate code.
+  4. Keep tests next to the code they test (move them with their group).
+  5. Build and run the tests, then "git add" the new and changed files and commit again.
+
+Do not bypass this with --no-verify. If the file is genuinely not hand-written (lockfile, generated
+code, vendored text), add its pattern to is_ignored in .githooks/pre-commit instead.
+EOF
+exit 1
