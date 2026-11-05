@@ -29,6 +29,26 @@ jobs:
           cp target/release/file-converter packaging/linux/install.sh packaging/linux/file-converter.desktop \
              packaging/icons/file-converter.png README.md LICENSE stage/file-converter/
           tar -C stage -czf dist/file-converter-linux-x86_64.tar.gz file-converter
+      - name: "Test: install the .deb, convert files, remove it"
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y ./dist/*.deb
+          test -f /usr/share/kio/servicemenus/file-converter-000.desktop
+          test -f /usr/share/kio/servicemenus/file-converter-settings.desktop
+          bash packaging/smoke-test.sh /usr/bin/file-converter
+          sudo apt-get remove -y file-converter
+          test -z "$(ls /usr/share/kio/servicemenus/file-converter-* 2>/dev/null)"
+      - name: "Test: tarball install.sh and --uninstall"
+        run: |
+          export HOME="$(mktemp -d)"
+          tar -xzf dist/file-converter-linux-x86_64.tar.gz -C "$HOME"
+          "$HOME/file-converter/install.sh"
+          test -x "$HOME/.local/bin/file-converter"
+          test -f "$HOME/.local/share/kio/servicemenus/file-converter-000.desktop"
+          grep -q "Exec=\"$HOME/.local/bin/file-converter\" settings" "$HOME/.local/share/applications/file-converter.desktop"
+          "$HOME/file-converter/install.sh" --uninstall
+          test ! -e "$HOME/.local/bin/file-converter"
+          test -z "$(ls "$HOME/.local/share/kio/servicemenus" 2>/dev/null)"
       - uses: actions/upload-artifact@v4
         with: { name: linux, path: "dist/*.*" }
 
@@ -52,13 +72,23 @@ jobs:
           $im = (gh api repos/ImageMagick/ImageMagick/releases/latest | ConvertFrom-Json).assets |
             Where-Object name -match 'portable-Q16-HDRI-x64\.7z$' | Select-Object -First 1
           Invoke-WebRequest $im.browser_download_url -OutFile im.7z
-          7z x im.7z -odist/tools -y | Out-Null
+          7z x im.7z -oim -y | Out-Null
+          # Only magick.exe is used; the other ImageMagick programs would add ~60 MB to the installer.
+          Copy-Item im/magick.exe, im/*.xml, im/sRGB.icc, im/LICENSE.txt, im/NOTICE.txt dist/tools/
           # Fail the build if a bundled tool lacks an encoder the presets use.
           $enc = & dist/tools/ffmpeg.exe -hide_banner -encoders
           foreach ($e in 'libx264','libvpx-vp9','libmp3lame','libvorbis','libtheora') {
             if (-not ($enc -match " $e ")) { throw "bundled ffmpeg lacks $e" }
           }
           & dist/tools/magick.exe -version
+      - name: Ghostscript for the PDF test (also checks the versioned-folder lookup)
+        run: choco install ghostscript -y --no-progress
+      - name: "Test: convert with the bundled tools (portable layout)"
+        shell: bash
+        run: |
+          cp target/release/file-converter.exe dist/
+          PATH="$PWD/dist/tools:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$PWD/dist/file-converter.exe"
+          rm dist/file-converter.exe
       - name: Installer
         shell: pwsh
         run: |
@@ -66,6 +96,30 @@ jobs:
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
           if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress | Out-Null }
           & $iscc "/DAppVersion=$version" packaging\windows\file-converter.iss
+      - name: "Test: silent install registers the context menu"
+        shell: pwsh
+        run: |
+          Start-Process dist/file-converter-setup-x64.exe -Wait -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/TASKS=','/LOG=setup.log'
+          $app = "$env:LOCALAPPDATA\Programs\File Converter"
+          if (-not (Test-Path "$app\tools\magick.exe")) { Get-Content setup.log; throw "not installed" }
+          if (Test-Path "$app\tools\mogrify.exe") { throw "unused ImageMagick programs bundled" }
+          $key = 'HKCU:\Software\Classes\SystemFileAssociations\.mp4\shell\FileConverter'
+          if ((Get-ItemProperty "$key\shell\000").MUIVerb -ne 'To Mkv') { throw "context menu not registered" }
+          if (-not (Test-Path "$key\shell\zzz-settings\command")) { throw "settings entry missing" }
+      - name: "Test: convert with the installed app"
+        shell: bash
+        run: |
+          APP="$(cygpath "$LOCALAPPDATA")/Programs/File Converter"
+          PATH="$APP/tools:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$APP/file-converter.exe"
+      - name: "Test: uninstall removes files and context menu"
+        shell: pwsh
+        run: |
+          $app = "$env:LOCALAPPDATA\Programs\File Converter"
+          Start-Process "$app\unins000.exe" -Wait -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES'
+          # The uninstaller re-launches itself from %TEMP%; wait for it to finish.
+          for ($i = 0; $i -lt 60 -and (Test-Path "$app\file-converter.exe"); $i++) { Start-Sleep 1 }
+          if (Test-Path "$app\file-converter.exe") { throw "uninstall left files" }
+          if (Test-Path 'HKCU:\Software\Classes\SystemFileAssociations\.mp4\shell\FileConverter') { throw "uninstall left the context menu" }
       - uses: actions/upload-artifact@v4
         with: { name: windows, path: dist/file-converter-setup-x64.exe }
 
@@ -76,6 +130,21 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo test --release
       - run: packaging/macos/build-dmg.sh "$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')"
+      - name: "Test: app from the DMG, Quick Action, convert, uninstall"
+        run: |
+          brew install ffmpeg imagemagick ghostscript
+          hdiutil attach dist/file-converter-macos.dmg -mountpoint /Volumes/fc
+          cp -R "/Volumes/fc/File Converter.app" /Applications/
+          hdiutil detach /Volumes/fc
+          BIN="/Applications/File Converter.app/Contents/MacOS/file-converter"
+          lipo -archs "$BIN" | grep -q x86_64 && lipo -archs "$BIN" | grep -q arm64
+          codesign --verify --deep "/Applications/File Converter.app"
+          "$BIN" install
+          WF="$HOME/Library/Services/File Converter.workflow/Contents"
+          plutil -lint "$WF/Info.plist" "$WF/document.wflow"
+          SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$BIN"
+          "$BIN" uninstall
+          test ! -e "$WF"
       - uses: actions/upload-artifact@v4
         with: { name: macos, path: dist/file-converter-macos.dmg }
 

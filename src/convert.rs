@@ -435,7 +435,9 @@ pub fn convert(input: &Path, p: &Preset, bar: &ProgressBar) -> R<Vec<PathBuf>> {
         src = crate::preset::unique_path(input.with_file_name(format!("{stem}_TEMP.{}", ext_of(input))));
         move_file(input, &src)?;
     }
-    let output = crate::preset::unique_path(wanted);
+    // Paged output never writes `wanted` itself; each `name-N.png` page is made unique instead.
+    let paged = p.output == Output::Png && (ext_of(input) == "pdf" || OFFICE.contains(&ext_of(input).as_str()));
+    let output = if paged { wanted } else { crate::preset::unique_path(wanted) };
     let res = convert_inner(&src, p, &output, bar);
     match (&res, p.o.post_action) {
         (Err(_), _) | (Ok(_), PostAction::None) => {
@@ -450,7 +452,7 @@ pub fn convert(input: &Path, p: &Preset, bar: &ProgressBar) -> R<Vec<PathBuf>> {
             move_file(&src, &crate::preset::unique_path(dir.join(input.file_name().unwrap())))?;
         }
     }
-    if res.is_err() {
+    if res.is_err() && !paged {
         let _ = std::fs::remove_file(&output);
     }
     res
