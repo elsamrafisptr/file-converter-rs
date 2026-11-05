@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://elsamrafisptr.github.io/file-converter-rs/sitemap.xml

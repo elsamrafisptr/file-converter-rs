@@ -1,0 +1,3 @@
+# Shows a "Sponsor" button on the GitHub repository page.
+# After GitHub Sponsors is approved for the account, add: github: [elsamrafisptr]
+custom: ["https://elsamrafisptr.github.io/file-converter-rs/donate.html"]

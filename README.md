@@ -3,7 +3,7 @@
 A Rust port of [Tichau/FileConverter](https://github.com/Tichau/FileConverter) ([file-converter.io](https://file-converter.io/)):
 right-click files in your file manager → **File Converter** → pick a preset (To Mp4, To Mp3, To Jpg, Scale 75% › To Webm, …).
 
-**Website and user guide: https://elsamrafisptr.github.io/file-converter-rs/** (source in `docs/`).
+**Website and user guide: https://elsamrafisptr.github.io/file-converter-rs/** (source in `docs/`) · [Changelog](CHANGELOG.md) · [Support the project](https://elsamrafisptr.github.io/file-converter-rs/donate.html)
 
 Same design as the original: a small app that runs the real converters with tuned arguments.
 
@@ -124,6 +124,12 @@ git config core.hooksPath .githooks
 ```
 
 `pre-commit` checks staged files only and rejects any file over 5,000 tokens (tokens = bytes / 4, i.e. 20,000 bytes), with step-by-step instructions for splitting it. Files not written by hand or by agents are skipped: lockfiles, generated code (`*.generated.*`, `*.pb.go`, `*.min.js`, …), vendored/build directories, license texts and binary files. Add other such patterns to `is_ignored` in `.githooks/pre-commit`.
+
+### Making a release
+
+1. Bump `version` in `Cargo.toml` and add the changes to `CHANGELOG.md`.
+2. Update the website: version, file names, sizes and SHA-256 codes in `docs/download.html`, the new entry in `docs/changelog.html`, `softwareVersion` in `docs/index.html`, and `lastmod` in `docs/sitemap.xml`. The codes are listed by `gh api repos/elsamrafisptr/file-converter-rs/releases/latest --jq '.assets[] | .name + " " + .digest'` after the release is built.
+3. Push a `vX.Y.Z` tag. CI tests every installer and publishes the release.
 
 ## License
 

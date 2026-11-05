@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Download File Converter for Windows, macOS and Linux</title>
+	<meta name="description" content="Download File Converter 0.1.1 for free: Windows installer, macOS app and Linux packages (.deb and .tar.gz), with simple install steps.">
+	<link rel="canonical" href="https://elsamrafisptr.github.io/file-converter-rs/download.html">
+	<meta name="theme-color" content="#1E2650">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="File Converter">
+	<meta property="og:title" content="Download File Converter">
+	<meta property="og:description" content="Free download for Windows, macOS and Linux. Convert files with a right-click.">
+	<meta property="og:url" content="https://elsamrafisptr.github.io/file-converter-rs/download.html">
+	<meta property="og:image" content="https://elsamrafisptr.github.io/file-converter-rs/images/og-image.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta name="twitter:card" content="summary_large_image">
+	<link rel="icon" href="favicon.ico" sizes="any">
+	<link rel="icon" type="image/png" href="images/icon-192.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Fira+Mono&family=Fira+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+	<div class="wrap">
+		<a class="brand" href="./"><img src="images/icon-192.png" alt="" width="32" height="32">File Converter</a>
+		<nav aria-label="Main">
+			<a href="download.html" aria-current="page">Download</a>
+			<a href="./#how">Guide</a>
+			<a href="./#help">Help</a>
+			<a href="changelog.html">Changelog</a>
+			<a href="donate.html">Donate</a>
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">GitHub</a>
+		</nav>
+	</div>
+</header>
+
+<div class="page-hero">
+	<div class="wrap">
+		<h1>Download</h1>
+		<p>Version 0.1.1 · free for everyone. Choose your system below. <a href="changelog.html" style="color:#fff">What's new?</a></p>
+		<div class="os-buttons" style="margin:24px 0 0">
+			<a class="button" href="#windows">Windows</a>
+			<a class="button" href="#macos">macOS</a>
+			<a class="button" href="#linux">Linux</a>
+		</div>
+	</div>
+</div>
+
+<section class="wide">
+	<div class="wrap">
+		<div>
+			<div class="os-block" id="windows">
+				<h3>Windows</h3>
+				<p class="muted">Windows 10 or 11, 64-bit.</p>
+				<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter-setup-x64.exe">Download for Windows (61 MB)</a>
+				<ol style="margin-top:20px">
+					<li>Open <code>file-converter-setup-x64.exe</code>.</li>
+					<li>If Windows says “Windows protected your PC”, click <b>More info</b>, then <b>Run anyway</b>. This happens because the installer is not signed yet.</li>
+					<li>Click <b>Next</b> until it is done. You do not need admin rights.</li>
+					<li>Optional: tick <b>Ghostscript</b> (to turn PDF pages into images) and <b>LibreOffice</b> (for Word, Excel and PowerPoint files). The installer downloads them for you.</li>
+				</ol>
+				<p>Done! Right-click a file and open <b>File Converter</b>. On Windows 11, click <b>Show more options</b> first. ffmpeg and ImageMagick are included, so video, audio and images work right away.</p>
+			</div>
+
+			<div class="os-block" id="macos">
+				<h3>macOS</h3>
+				<p class="muted">macOS 11 (Big Sur) or newer. Works on Apple Silicon and Intel Macs.</p>
+				<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter-macos.dmg">Download for macOS (11 MB)</a>
+				<ol style="margin-top:20px">
+					<li>Open <code>file-converter-macos.dmg</code> and drag <b>File Converter</b> into <b>Applications</b>.</li>
+					<li>Open <b>Applications</b>, right-click <b>File Converter</b> and choose <b>Open</b>. Click <b>Open</b> again. You only do this the first time, because the app is not signed by Apple.</li>
+					<li>Install the converter tools with <a href="https://brew.sh">Homebrew</a>. Open <b>Terminal</b> and paste:
+						<pre><code>brew install ffmpeg-full imagemagick ghostscript</code></pre></li>
+					<li>Optional, for Word, Excel and PowerPoint files: <code>brew install --cask libreoffice</code></li>
+				</ol>
+				<p>Done! In Finder, right-click a file › <b>Quick Actions</b> › <b>File Converter…</b> and choose a preset. Do not see it? Open <b>System Settings</b>, search for <b>Extensions</b> and turn on <b>File Converter…</b> under <b>Finder</b>.</p>
+			</div>
+
+			<div class="os-block" id="linux">
+				<h3>Linux</h3>
+				<p class="muted">64-bit (x86_64). Works with Dolphin (KDE) and Files/Nautilus (GNOME).</p>
+				<h4>Ubuntu, Kubuntu, Debian, Linux Mint, Pop!_OS</h4>
+				<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter_0.1.1-1_amd64.deb">Download .deb (6 MB)</a>
+				<p style="margin-top:16px">Double-click the file to install it, or run this in a terminal in your Downloads folder:</p>
+				<pre><code>sudo apt install ./file-converter_0.1.1-1_amd64.deb</code></pre>
+				<p>This also installs ffmpeg, ImageMagick and Ghostscript. For Office files, add <code>sudo apt install libreoffice</code>.</p>
+
+				<h4 style="margin-top:28px">Fedora, Arch, openSUSE and others</h4>
+				<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter-linux-x86_64.tar.gz">Download .tar.gz (8.5 MB)</a>
+				<p style="margin-top:16px">Unpack it and run the installer. It installs for your user only (no root needed):</p>
+				<pre><code>tar -xzf file-converter-linux-x86_64.tar.gz
+cd file-converter
+./install.sh</code></pre>
+				<p>Then install the converter tools with your package manager, for example <code>sudo dnf install ffmpeg ImageMagick ghostscript</code> on Fedora (ffmpeg comes from <a href="https://rpmfusion.org/">RPM Fusion</a>) or <code>sudo pacman -S ffmpeg imagemagick ghostscript</code> on Arch.</p>
+				<p>Done! Right-click a file › <b>File Converter</b> (Dolphin). With Files/Nautilus, open the <b>File Converter</b> app once, then use right-click › <b>Scripts</b> › <b>File Converter</b>.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="alt">
+	<div class="wrap">
+		<h2>Check your download</h2>
+		<div>
+			<p>This step is optional. It proves the file is exactly the one we published. Compare the result of the command with the code in the table.</p>
+			<table class="files">
+				<tr><th>File</th><th>Size</th><th>SHA-256</th></tr>
+				<tr><td>file-converter-setup-x64.exe</td><td>61.2 MB</td><td class="hash">b66acf14d785fba153a3b1485dcabaa57b3809331ccfd4a5ecd4b267a9fc959b</td></tr>
+				<tr><td>file-converter-macos.dmg</td><td>11.3 MB</td><td class="hash">015075f20822f0d96380fc08111bcfdd45d0b7eb700edf3b1222fb40de8d1ecd</td></tr>
+				<tr><td>file-converter_0.1.1-1_amd64.deb</td><td>6.0 MB</td><td class="hash">db10f1b59cbe0b4f1c016d550089787d947bac74f36b439ade43fc6e70b74665</td></tr>
+				<tr><td>file-converter-linux-x86_64.tar.gz</td><td>8.5 MB</td><td class="hash">e92128b6c71035e606d13fbe98d812c2b4246d2a8986b499b8ad44a8defda1fd</td></tr>
+			</table>
+			<table>
+				<tr><th>System</th><th>Command</th></tr>
+				<tr><td>Windows (PowerShell)</td><td><code>Get-FileHash .\file-converter-setup-x64.exe</code></td></tr>
+				<tr><td>macOS</td><td><code>shasum -a 256 file-converter-macos.dmg</code></td></tr>
+				<tr><td>Linux</td><td><code>sha256sum file-converter_0.1.1-1_amd64.deb</code></td></tr>
+			</table>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="wrap">
+		<h2>Other ways</h2>
+		<div>
+			<h3>Older versions</h3>
+			<p>All versions are on the <a href="https://github.com/elsamrafisptr/file-converter-rs/releases">GitHub releases page</a>. See the <a href="changelog.html">changelog</a> for what changed.</p>
+			<h3 style="margin-top:24px">Build it yourself</h3>
+			<p>You need <a href="https://rustup.rs">Rust</a>. Then run:</p>
+			<pre><code>git clone https://github.com/elsamrafisptr/file-converter-rs
+cd file-converter-rs
+cargo install --path .
+file-converter install</code></pre>
+		</div>
+	</div>
+</section>
+
+<footer>
+	<div class="wrap">
+		<p>File Converter is free software under the <a href="https://github.com/elsamrafisptr/file-converter-rs/blob/main/LICENSE">GPL v3</a>, made by <a href="https://github.com/elsamrafisptr">Elsam Rafi Saputra</a>.<br>
+			Based on <a href="https://github.com/Tichau/FileConverter">FileConverter</a> by Adrien Allard (<a href="https://file-converter.io/">file-converter.io</a>).</p>
+		<p><a href="download.html">Download</a> · <a href="changelog.html">Changelog</a> · <a href="donate.html">Donate</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs/issues">Report a problem</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">Source code</a></p>
+	</div>
+</footer>
+
+</body>
+</html>
