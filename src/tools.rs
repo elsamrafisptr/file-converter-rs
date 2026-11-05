@@ -12,6 +12,10 @@ fn search_dirs() -> Vec<PathBuf> {
         dirs.push(exe_dir.join("tools"));
         dirs.push(exe_dir);
     }
+    if cfg!(target_os = "macos") {
+        // Homebrew's plain `ffmpeg` lacks libvorbis/libtheora; the keg-only `ffmpeg-full` has them.
+        dirs.extend(["/opt/homebrew/opt/ffmpeg-full/bin", "/usr/local/opt/ffmpeg-full/bin"].map(PathBuf::from));
+    }
     dirs.extend(std::env::var_os("PATH").map(|p| std::env::split_paths(&p).collect::<Vec<_>>()).unwrap_or_default());
     if cfg!(target_os = "macos") {
         dirs.extend(
@@ -89,13 +93,29 @@ pub fn missing() -> Vec<(&'static str, &'static str)> {
         ("Ghostscript", "PDF pages", ghostscript),
         ("LibreOffice", "Office documents (optional)", libreoffice),
     ];
-    checks.into_iter().filter(|(_, _, find)| find().is_err()).map(|(name, purpose, _)| (name, purpose)).collect()
+    let mut missing: Vec<_> =
+        checks.into_iter().filter(|(_, _, find)| find().is_err()).map(|(name, purpose, _)| (name, purpose)).collect();
+    // Slim builds (Homebrew `ffmpeg`, Fedora `ffmpeg-free`) lack encoders some presets use.
+    if let Ok(ff) = ffmpeg() {
+        let out = std::process::Command::new(ff).args(["-hide_banner", "-encoders"]).output();
+        let list = out.map(|o| String::from_utf8_lossy(&o.stdout).into_owned()).unwrap_or_default();
+        if ENCODERS.iter().any(|e| !list.contains(&format!(" {e} "))) {
+            missing.push((
+                "a full ffmpeg build",
+                "this ffmpeg lacks libx264, libvpx-vp9, libmp3lame, libvorbis or libtheora",
+            ));
+        }
+    }
+    missing
 }
+
+/// Encoders the default presets need.
+const ENCODERS: [&str; 5] = ["libx264", "libvpx-vp9", "libmp3lame", "libvorbis", "libtheora"];
 
 /// One command that installs every converter on this OS.
 pub fn install_hint() -> &'static str {
     if cfg!(target_os = "macos") {
-        "brew install ffmpeg imagemagick ghostscript && brew install --cask libreoffice"
+        "brew install ffmpeg-full imagemagick ghostscript && brew install --cask libreoffice"
     } else if cfg!(windows) {
         "winget install Gyan.FFmpeg ImageMagick.ImageMagick ArtifexSoftware.GhostScript TheDocumentFoundation.LibreOffice"
     } else if Path::new("/usr/bin/apt").exists() {

@@ -24,7 +24,7 @@ Download the file for your system from the [latest release](https://github.com/e
 | **Windows 10/11** | `file-converter-setup-x64.exe` | Run it. ffmpeg and ImageMagick are included; the installer can also fetch Ghostscript (PDF) and LibreOffice (Office files) with winget. No admin rights needed. |
 | **Ubuntu, Kubuntu, Debian, Mint, Pop!_OS** | `file-converter_<version>_amd64.deb` | Double-click it, or `sudo apt install ./file-converter_*_amd64.deb`. ffmpeg, ImageMagick and Ghostscript are installed automatically. |
 | **Other Linux** | `file-converter-linux-x86_64.tar.gz` | Extract it and run `./install.sh`, then install the converters it lists (e.g. `sudo dnf install ffmpeg ImageMagick ghostscript`). |
-| **macOS 11+** | `file-converter-macos.dmg` | Drag **File Converter** to Applications and open it once (first time: right-click › **Open**, since the app is not notarized). Then install the converters: `brew install ffmpeg imagemagick ghostscript` ([Homebrew](https://brew.sh)). |
+| **macOS 11+** | `file-converter-macos.dmg` | Drag **File Converter** to Applications and open it once (first time: right-click › **Open**, since the app is not notarized). Then install the converters: `brew install ffmpeg-full imagemagick ghostscript` ([Homebrew](https://brew.sh); the plain `ffmpeg` formula lacks the Vorbis/Theora encoders used by WebM/OGG/OGV). |
 
 Then right-click any supported file:
 

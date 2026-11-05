@@ -35,6 +35,9 @@ jobs:
           sudo apt-get install -y ./dist/*.deb
           test -f /usr/share/kio/servicemenus/file-converter-000.desktop
           test -f /usr/share/kio/servicemenus/file-converter-settings.desktop
+          /usr/bin/file-converter install | tee install.txt
+          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
+          /usr/bin/file-converter uninstall
           bash packaging/smoke-test.sh /usr/bin/file-converter
           sudo apt-get remove -y file-converter
           test -z "$(ls /usr/share/kio/servicemenus/file-converter-* 2>/dev/null)"
@@ -110,6 +113,8 @@ jobs:
         shell: bash
         run: |
           APP="$(cygpath "$LOCALAPPDATA")/Programs/File Converter"
+          "$APP/file-converter.exe" install | tee install.txt
+          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
           PATH="$APP/tools:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$APP/file-converter.exe"
       - name: "Test: uninstall removes files and context menu"
         shell: pwsh
@@ -132,17 +137,19 @@ jobs:
       - run: packaging/macos/build-dmg.sh "$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')"
       - name: "Test: app from the DMG, Quick Action, convert, uninstall"
         run: |
-          brew install ffmpeg imagemagick ghostscript
+          brew install ffmpeg-full imagemagick ghostscript
           hdiutil attach dist/file-converter-macos.dmg -mountpoint /Volumes/fc
           cp -R "/Volumes/fc/File Converter.app" /Applications/
           hdiutil detach /Volumes/fc
           BIN="/Applications/File Converter.app/Contents/MacOS/file-converter"
           lipo -archs "$BIN" | grep -q x86_64 && lipo -archs "$BIN" | grep -q arm64
           codesign --verify --deep "/Applications/File Converter.app"
-          "$BIN" install
+          "$BIN" install | tee install.txt
+          # ffmpeg-full is keg-only (not in PATH): the app must still find it and see all encoders.
+          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
           WF="$HOME/Library/Services/File Converter.workflow/Contents"
           plutil -lint "$WF/Info.plist" "$WF/document.wflow"
-          SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$BIN"
+          PATH="$(brew --prefix ffmpeg-full)/bin:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$BIN"
           "$BIN" uninstall
           test ! -e "$WF"
       - uses: actions/upload-artifact@v4
