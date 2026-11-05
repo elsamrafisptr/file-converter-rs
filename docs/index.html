@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>File Converter — convert files with a right-click</title>
+	<meta name="description" content="File Converter is a free tool to convert and compress video, audio, images and documents from the right-click menu on Windows, macOS and Linux.">
+	<meta name="theme-color" content="#1E2650">
+	<link rel="icon" href="images/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Fira+Mono&family=Fira+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+	<div class="wrap">
+		<a class="brand" href="#"><img src="images/icon.png" alt="">File Converter</a>
+		<nav>
+			<a href="#download">Download</a>
+			<a href="#how">How to use</a>
+			<a href="#formats">Formats</a>
+			<a href="#settings">Settings</a>
+			<a href="#help">Help</a>
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">GitHub</a>
+		</nav>
+	</div>
+</header>
+
+<div class="hero">
+	<div class="wrap">
+		<div>
+			<h1>File Converter</h1>
+			<p class="lead">Convert and compress your files in two clicks. Right-click a file, choose a format, done.</p>
+			<a class="button" href="#download">Download</a>
+			<a class="button ghost" href="#how">How it works</a>
+			<p class="version">Version 0.1.1 · Free and open source · Windows, macOS and Linux ·
+				<a href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest">Release notes</a></p>
+		</div>
+		<svg viewBox="0 0 420 300" role="img" aria-label="A right-click menu with File Converter and a list of formats">
+			<rect x="20" y="40" width="70" height="88" rx="6" fill="#fff"/>
+			<path d="M70 40v20h20" fill="#dde1e4"/>
+			<rect x="34" y="78" width="42" height="28" rx="3" fill="#28607F"/>
+			<path d="M50 84l12 8-12 8z" fill="#fff"/>
+			<text x="55" y="148" fill="#e7e9f2" font-size="13" text-anchor="middle" font-family="sans-serif">holiday.mov</text>
+			<rect x="110" y="60" width="150" height="170" rx="6" fill="#fff"/>
+			<g font-family="sans-serif" font-size="13" fill="#1E2650">
+				<text x="124" y="86">Open</text>
+				<text x="124" y="114">Copy</text>
+				<text x="124" y="142">Rename</text>
+				<rect x="114" y="156" width="142" height="28" rx="4" fill="#D34516"/>
+				<text x="124" y="175" fill="#fff" font-weight="600">File Converter</text>
+				<text x="240" y="175" fill="#fff">›</text>
+				<text x="124" y="210">Properties</text>
+			</g>
+			<rect x="252" y="120" width="150" height="160" rx="6" fill="#fff"/>
+			<g font-family="sans-serif" font-size="13" fill="#1E2650">
+				<rect x="256" y="128" width="142" height="26" rx="4" fill="#28607F"/>
+				<text x="266" y="146" fill="#fff" font-weight="600">To Mp4</text>
+				<text x="266" y="174">To Webm</text>
+				<text x="266" y="200">To Gif</text>
+				<text x="266" y="226">To Mp3</text>
+				<line x1="262" y1="240" x2="392" y2="240" stroke="#dde1e4"/>
+				<text x="266" y="264" fill="#67737A">Configure presets…</text>
+			</g>
+		</svg>
+	</div>
+</div>
+
+<section>
+	<div class="wrap">
+		<h2>Why File Converter?</h2>
+		<div class="cards">
+			<div class="card"><h3>Two clicks</h3><p>No app to open, no website to upload to. Right-click your files and pick the format you want.</p></div>
+			<div class="card"><h3>Works everywhere</h3><p>The same tool on Windows, macOS and Linux, with more than 70 ready-made presets.</p></div>
+			<div class="card"><h3>Free and private</h3><p>No ads and no tracking. Your files never leave your computer. The code is open source (GPL v3).</p></div>
+		</div>
+	</div>
+</section>
+
+<section id="download" class="alt wide">
+	<div class="wrap">
+		<h2>Download and install</h2>
+		<div>
+			<div class="cards">
+				<div class="card os">
+					<h3>Windows 10 and 11</h3>
+					<ol>
+						<li>Download the installer.</li>
+						<li>Open it and click <b>Next</b> until it is done. You do not need admin rights.</li>
+						<li>If Windows says “Windows protected your PC”, click <b>More info</b>, then <b>Run anyway</b>.</li>
+					</ol>
+					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-setup-x64.exe">Download for Windows</a>
+					<p class="muted">61 MB. Everything for video, audio and images is included.</p>
+				</div>
+				<div class="card os">
+					<h3>macOS 11 or newer</h3>
+					<ol>
+						<li>Download and open the <code>.dmg</code> file.</li>
+						<li>Drag <b>File Converter</b> into <b>Applications</b>.</li>
+						<li>Right-click the app and choose <b>Open</b> (only the first time).</li>
+						<li>Install the converters with <a href="https://brew.sh">Homebrew</a>:</li>
+					</ol>
+					<pre><code>brew install ffmpeg-full imagemagick ghostscript</code></pre>
+					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-macos.dmg">Download for macOS</a>
+				</div>
+				<div class="card os">
+					<h3>Linux</h3>
+					<p><b>Ubuntu, Kubuntu, Debian, Mint:</b> download the <code>.deb</code> file and open it, or run:</p>
+					<pre><code>sudo apt install ./file-converter_0.1.1-1_amd64.deb</code></pre>
+					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter_0.1.1-1_amd64.deb">Download .deb</a>
+					<p class="muted" style="margin-top:14px"><b>Other Linux:</b> download the <a href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-linux-x86_64.tar.gz">.tar.gz file</a>, unpack it and run <code>./install.sh</code>.</p>
+				</div>
+			</div>
+			<p class="note" style="margin-top:24px">File Converter uses free tools to do the work: <b>ffmpeg</b> (video and audio), <b>ImageMagick</b> (images), <b>Ghostscript</b> (PDF pages) and <b>LibreOffice</b> (Word, Excel and PowerPoint). If one is missing, the File Converter app tells you and shows the command to install it.</p>
+		</div>
+	</div>
+</section>
+
+<section id="how">
+	<div class="wrap">
+		<h2>How to use it</h2>
+		<div>
+			<div class="steps">
+				<div class="step"><h3>Select</h3><p>Select one or more files in your file manager.</p></div>
+				<div class="step"><h3>Right-click</h3><p>Open <b>File Converter</b> in the menu.</p></div>
+				<div class="step"><h3>Choose</h3><p>Click a preset, for example <b>To Mp4</b>. Wait for the message that it is done.</p></div>
+			</div>
+			<table>
+				<tr><th>Where</th><th>Where to find the menu</th></tr>
+				<tr><td>Windows 11</td><td>Right-click › <b>Show more options</b> › <b>File Converter</b></td></tr>
+				<tr><td>Windows 10</td><td>Right-click › <b>File Converter</b></td></tr>
+				<tr><td>Linux (Dolphin)</td><td>Right-click › <b>File Converter</b></td></tr>
+				<tr><td>Linux (Files / Nautilus)</td><td>Open the <b>File Converter</b> app once. Then right-click › <b>Scripts</b> › <b>File Converter</b></td></tr>
+				<tr><td>macOS (Finder)</td><td>Right-click › <b>Quick Actions</b> › <b>File Converter…</b>, then choose a preset in the list</td></tr>
+			</table>
+			<p style="margin-top:20px">The new file is saved <b>next to the original</b>, with the same name. File Converter never overwrites a file: if <code>video.mp4</code> already exists, you get <code>video (2).mp4</code>.</p>
+		</div>
+	</div>
+</section>
+
+<section id="formats" class="alt">
+	<div class="wrap">
+		<h2>What it can convert</h2>
+		<div>
+			<table>
+				<tr><th>Type</th><th>Convert to</th><th>From</th></tr>
+				<tr><td>Video</td><td>mp4, mkv, webm, ogv, avi, gif</td><td>3gp, avi, flv, gif, m4v, mkv, mov, mp4, mpeg, mpg, ogv, rm, ts, vob, webm, wmv</td></tr>
+				<tr><td>Audio</td><td>mp3, aac, ogg, flac, wav</td><td>aac, aiff, ape, flac, m4a, m4b, mp3, oga, ogg, opus, wav, wma, and the sound of any video</td></tr>
+				<tr><td>Image</td><td>jpg, png, webp, avif, ico, gif</td><td>arw, avif, bmp, cr2, dds, dng, exr, heic, ico, jfif, jpg, jpeg, nef, png, psd, raf, svg, tga, tif, tiff, webp, xcf</td></tr>
+				<tr><td>Document</td><td>pdf, png (one per page)</td><td>pdf, doc, docx, odt, xls, xlsx, ods, ppt, pptx, odp, and images</td></tr>
+			</table>
+			<p style="margin-top:20px">There are also ready-made presets to <b>make videos smaller</b> (Scale 75%, Scale 25%, 720p, 1080p), to <b>rotate</b> photos and videos, and to change the <b>speed or pitch</b> of music.</p>
+		</div>
+	</div>
+</section>
+
+<section id="settings">
+	<div class="wrap">
+		<h2>Change the menu</h2>
+		<div>
+			<p>Open the settings with <b>Configure presets…</b> at the bottom of the File Converter menu, or open the <b>File Converter</b> app from the Start menu, the app menu or Applications.</p>
+			<div class="cards">
+				<div class="card"><h3>Presets</h3><p>Add, copy, delete and reorder presets. Put a <code>/</code> in the name to make a sub-menu, like <code>Small/To Mp4</code>.</p></div>
+				<div class="card"><h3>File types</h3><p>Tick the file types a preset should appear on. Untick them to hide it from the menu.</p></div>
+				<div class="card"><h3>Quality</h3><p>Change the quality, size, rotation, audio bitrate and more. Experts can type their own ffmpeg options.</p></div>
+			</div>
+			<p style="margin-top:20px">Click <b>Save and update context menu</b> to apply your changes. <b>Restore defaults</b> brings back the original presets.</p>
+			<h3 style="margin-top:28px">Output file name</h3>
+			<p>Each preset has a name pattern. The default <code>(p)(f)</code> means “same folder, same name”. Some useful parts:</p>
+			<table>
+				<tr><th>Part</th><th>Meaning</th><th>Example</th></tr>
+				<tr><td><code>(p)</code></td><td>Folder of the original file</td><td><code>/home/me/Videos/</code></td></tr>
+				<tr><td><code>(f)</code></td><td>Name of the original file</td><td><code>holiday</code></td></tr>
+				<tr><td><code>(i)</code></td><td>Old file extension</td><td><code>mov</code></td></tr>
+				<tr><td><code>(p:v)</code></td><td>Your Videos folder (<code>(p:m)</code> Music, <code>(p:p)</code> Pictures, <code>(p:d)</code> Documents)</td><td><code>(p:v)(f)</code></td></tr>
+			</table>
+			<p class="muted" style="margin-top:14px">Example: <code>(p)converted/(f)</code> puts the new files in a “converted” folder next to the originals.</p>
+		</div>
+	</div>
+</section>
+
+<section id="help" class="alt">
+	<div class="wrap">
+		<h2>Help</h2>
+		<div>
+			<details>
+				<summary>I do not see File Converter in the right-click menu</summary>
+				<p><b>Windows 11:</b> click <b>Show more options</b> first. <b>Linux:</b> close and open your file manager again. With Files (Nautilus), open the File Converter app once. <b>macOS:</b> open the File Converter app once. Then open <b>System Settings</b>, search for <b>Extensions</b>, and turn on <b>File Converter…</b> under <b>Finder</b>.</p>
+				<p>The menu only shows the presets that fit <b>all</b> selected files. Select files of the same type.</p>
+			</details>
+			<details>
+				<summary>The app says “Not installed: …”</summary>
+				<p>One of the free converter tools is missing. Click <b>Copy</b> next to the command, paste it into a terminal and run it. Then click <b>Check again</b>.</p>
+			</details>
+			<details>
+				<summary>macOS says the app “cannot be opened”</summary>
+				<p>The app is not signed by Apple. Right-click it in Applications and choose <b>Open</b>, then <b>Open</b> again. If that does not work, go to <b>System Settings › Privacy &amp; Security</b> and click <b>Open Anyway</b>.</p>
+			</details>
+			<details>
+				<summary>Windows says “Windows protected your PC”</summary>
+				<p>The installer is not signed yet. Click <b>More info</b>, then <b>Run anyway</b>.</p>
+			</details>
+			<details>
+				<summary>Word, Excel or PowerPoint files do not convert</summary>
+				<p>Install <a href="https://www.libreoffice.org/download/">LibreOffice</a> (free). On Windows, you can also run the File Converter installer again and tick the LibreOffice box.</p>
+			</details>
+			<details>
+				<summary>A conversion failed</summary>
+				<p>You get a message with the reason. Make sure the file opens in a normal player or viewer. If it still fails, <a href="https://github.com/elsamrafisptr/file-converter-rs/issues">report the problem on GitHub</a> and include the message.</p>
+			</details>
+			<details>
+				<summary>How do I uninstall it?</summary>
+				<p><b>Windows:</b> Settings › Apps › File Converter › Uninstall. <b>Ubuntu/Debian:</b> <code>sudo apt remove file-converter</code>. <b>Other Linux:</b> <code>./install.sh --uninstall</code>. <b>macOS:</b> run the command below, then move the app to the Trash.</p>
+				<pre><code>"/Applications/File Converter.app/Contents/MacOS/file-converter" uninstall</code></pre>
+			</details>
+			<details>
+				<summary>Can I use it from the terminal?</summary>
+				<pre><code>file-converter list                         # show all presets
+file-converter convert --preset "To Mp4" a.mov b.avi
+file-converter settings                     # open the settings window</code></pre>
+			</details>
+		</div>
+	</div>
+</section>
+
+<footer>
+	<div class="wrap">
+		<p>File Converter is free software under the <a href="https://github.com/elsamrafisptr/file-converter-rs/blob/main/LICENSE">GPL v3</a>.<br>
+			Based on <a href="https://github.com/Tichau/FileConverter">FileConverter</a> by Adrien Allard (<a href="https://file-converter.io/">file-converter.io</a>).</p>
+		<p><a href="https://github.com/elsamrafisptr/file-converter-rs">Source code</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs/issues">Report a problem</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs/releases">All versions</a></p>
+	</div>
+</footer>
+
+</body>
+</html>
