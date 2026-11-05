@@ -3,6 +3,8 @@
 A Rust port of [Tichau/FileConverter](https://github.com/Tichau/FileConverter) ([file-converter.io](https://file-converter.io/)):
 right-click files in your file manager → **File Converter** → pick a preset (To Mp4, To Mp3, To Jpg, Scale 75% › To Webm, …).
 
+**Website and user guide: https://elsamrafisptr.github.io/file-converter-rs/** (source in `docs/`).
+
 Same design as the original: a small app that runs the real converters with tuned arguments.
 
 | Input → output | Engine (original) | Engine (here) |
