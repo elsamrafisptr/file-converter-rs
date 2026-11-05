@@ -2,6 +2,7 @@
 //! LibreOffice, PDFs through Ghostscript, images through ImageMagick, everything else through ffmpeg.
 
 use crate::preset::{ext_of, AudioMode, Output, PostAction, Preset, VideoSpeed};
+use crate::tools::{ffmpeg, ghostscript, libreoffice, magick};
 use indicatif::ProgressBar;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
@@ -10,8 +11,8 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 const OFFICE: &[&str] = &["doc", "docx", "odt", "xls", "xlsx", "ods", "ppt", "pptx", "odp"];
 const IMAGES: &[&str] = &[
-    "xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef",
-    "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp",
+    "xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd",
+    "raf", "svg", "tga", "tif", "tiff", "webp",
 ];
 
 type R<T> = Result<T, String>;
@@ -21,40 +22,6 @@ fn temp_path(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, Ordering::Relaxed);
     std::env::temp_dir().join(format!("file-converter-{}-{n}-{name}", std::process::id()))
-}
-
-/// Finds an executable next to our binary, in PATH, or in well-known install folders
-/// (Finder/Explorer launch us with a minimal PATH).
-pub fn tool(names: &[&str]) -> R<PathBuf> {
-    let exe_dir = std::env::current_exe().ok().and_then(|p| p.parent().map(Path::to_path_buf));
-    let mut dirs: Vec<PathBuf> = exe_dir.into_iter().collect();
-    dirs.extend(std::env::var_os("PATH").map(|p| std::env::split_paths(&p).collect::<Vec<_>>()).unwrap_or_default());
-    let extra: &[&str] = if cfg!(target_os = "macos") {
-        &["/opt/homebrew/bin", "/usr/local/bin", "/Applications/LibreOffice.app/Contents/MacOS"]
-    } else if cfg!(windows) {
-        &[r"C:\Program Files\LibreOffice\program"]
-    } else {
-        &["/usr/local/bin", "/usr/bin", "/snap/bin"]
-    };
-    dirs.extend(extra.iter().map(PathBuf::from));
-    for name in names {
-        for d in &dirs {
-            let p = d.join(format!("{name}{}", std::env::consts::EXE_SUFFIX));
-            if p.is_file() {
-                return Ok(p);
-            }
-        }
-    }
-    Err(format!("'{}' not found; install it or put it next to file-converter", names[0]))
-}
-
-fn magick() -> R<PathBuf> {
-    // ImageMagick 7 ships `magick`; v6 (older Linux distros) only `convert` (which is a system tool on Windows).
-    if cfg!(windows) { tool(&["magick"]) } else { tool(&["magick", "convert"]) }
-}
-
-fn ghostscript() -> R<PathBuf> {
-    tool(&["gs", "gswin64c", "gswin32c"])
 }
 
 fn num(x: f64) -> String {
@@ -69,24 +36,63 @@ fn nearest(table: &[(u32, &'static str)], bitrate: u32) -> &'static str {
 
 // https://trac.ffmpeg.org/wiki/Encode/MP3
 pub const MP3_VBR: &[(u32, &str)] = &[
-    (245, "0"), (225, "1"), (190, "2"), (175, "3"), (165, "4"), (130, "5"), (115, "6"), (100, "7"), (85, "8"), (65, "9"),
+    (245, "0"),
+    (225, "1"),
+    (190, "2"),
+    (175, "3"),
+    (165, "4"),
+    (130, "5"),
+    (115, "6"),
+    (100, "7"),
+    (85, "8"),
+    (65, "9"),
 ];
 // http://wiki.hydrogenaud.io/index.php?title=Recommended_Ogg_Vorbis
 pub const OGG_VBR: &[(u32, &str)] = &[
-    (500, "10"), (320, "9"), (256, "8"), (224, "7"), (192, "6"), (160, "5"), (128, "4"), (112, "3"), (96, "2"),
-    (80, "1"), (64, "0"), (48, "-1"), (32, "-2"),
+    (500, "10"),
+    (320, "9"),
+    (256, "8"),
+    (224, "7"),
+    (192, "6"),
+    (160, "5"),
+    (128, "4"),
+    (112, "3"),
+    (96, "2"),
+    (80, "1"),
+    (64, "0"),
+    (48, "-1"),
+    (32, "-2"),
 ];
 // FileConverter's "FFMPEG retro engineering" table for the native aac encoder.
 pub const AAC_VBR: &[(u32, &str)] = &[
-    (460, "3.9"), (340, "3"), (256, "2.2"), (224, "1.9"), (192, "1.6"), (155, "1.3"), (128, "1"), (112, "0.9"),
-    (96, "0.75"), (80, "0.6"), (64, "0.45"), (48, "0.3"), (32, "0.2"), (16, "0.1"),
+    (460, "3.9"),
+    (340, "3"),
+    (256, "2.2"),
+    (224, "1.9"),
+    (192, "1.6"),
+    (155, "1.3"),
+    (128, "1"),
+    (112, "0.9"),
+    (96, "0.75"),
+    (80, "0.6"),
+    (64, "0.45"),
+    (48, "0.3"),
+    (32, "0.2"),
+    (16, "0.1"),
 ];
 
 fn x264_preset(s: VideoSpeed) -> &'static str {
     use VideoSpeed::*;
     match s {
-        UltraFast => "ultrafast", SuperFast => "superfast", VeryFast => "veryfast", Faster => "faster", Fast => "fast",
-        Medium => "medium", Slow => "slow", Slower => "slower", VerySlow => "veryslow",
+        UltraFast => "ultrafast",
+        SuperFast => "superfast",
+        VeryFast => "veryfast",
+        Faster => "faster",
+        Fast => "fast",
+        Medium => "medium",
+        Slow => "slow",
+        Slower => "slower",
+        VerySlow => "veryslow",
     }
 }
 
@@ -160,7 +166,11 @@ pub fn ffmpeg_args(p: &Preset) -> R<Vec<String>> {
         ),
         Output::Webm => {
             // Maximum quality means lossless. https://trac.ffmpeg.org/wiki/Encode/VP9
-            let q = if o.video_quality >= 63 { "-lossless 1".into() } else { format!("-crf {} -b:v 0", 63 - o.video_quality) };
+            let q = if o.video_quality >= 63 {
+                "-lossless 1".into()
+            } else {
+                format!("-crf {} -b:v 0", 63 - o.video_quality)
+            };
             format!("-c:v libvpx-vp9 {q} {}", audio("libvorbis", nearest(OGG_VBR, o.audio_bitrate)))
         }
         other => return Err(format!("ffmpeg cannot produce {other:?} in this tool")),
@@ -170,7 +180,7 @@ pub fn ffmpeg_args(p: &Preset) -> R<Vec<String>> {
 
 /// Runs ffmpeg, feeding `-progress` output into the bar.
 fn run_ffmpeg(input: &Path, args: &[String], output: &Path, bar: &ProgressBar) -> R<()> {
-    let mut child = Command::new(tool(&["ffmpeg"])?)
+    let mut child = Command::new(ffmpeg()?)
         .args(["-hide_banner", "-nostdin", "-n", "-nostats", "-progress", "pipe:1"])
         .arg("-i")
         .arg(input)
@@ -321,7 +331,7 @@ fn office_to_pdf(input: &Path, tmp: &Path) -> R<PathBuf> {
         url.insert(0, '/');
     }
     run(
-        Command::new(tool(&["soffice", "libreoffice", "soffice.com"])?)
+        Command::new(libreoffice()?)
             .arg(format!("-env:UserInstallation=file://{url}"))
             .args(["--headless", "--convert-to", "pdf", "--outdir"])
             .arg(tmp)
@@ -329,7 +339,11 @@ fn office_to_pdf(input: &Path, tmp: &Path) -> R<PathBuf> {
         "LibreOffice",
     )?;
     let pdf = tmp.join(input.file_stem().unwrap()).with_extension("pdf");
-    if pdf.exists() { Ok(pdf) } else { Err("LibreOffice produced no PDF".into()) }
+    if pdf.exists() {
+        Ok(pdf)
+    } else {
+        Err("LibreOffice produced no PDF".into())
+    }
 }
 
 fn move_file(from: &Path, to: &Path) -> R<()> {
@@ -381,7 +395,12 @@ fn convert_inner(input: &Path, p: &Preset, output: &Path, bar: &ProgressBar) -> 
             bar.set_message("indexing colors");
             let res = run_ffmpeg(input, &["-vf".into(), format!("{vf},palettegen")], &palette, bar).and_then(|_| {
                 bar.set_message("ffmpeg");
-                let args = ["-i".into(), palette.display().to_string(), "-lavfi".into(), format!("{vf} [x]; [x][1:v] paletteuse")];
+                let args = [
+                    "-i".into(),
+                    palette.display().to_string(),
+                    "-lavfi".into(),
+                    format!("{vf} [x]; [x][1:v] paletteuse"),
+                ];
                 run_ffmpeg(input, &args, output, bar)
             });
             let _ = std::fs::remove_file(&palette);

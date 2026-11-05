@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=File Converter
+GenericName=File Converter
+Comment=Convert and compress files from the right-click menu
+Exec=file-converter settings
+Icon=file-converter
+Terminal=false
+Categories=Utility;AudioVideo;Graphics;
+Keywords=convert;compress;video;audio;image;pdf;

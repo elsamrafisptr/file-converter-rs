@@ -2,6 +2,7 @@ mod convert;
 mod gui;
 mod integrate;
 mod preset;
+mod tools;
 
 use clap::{Parser, Subcommand};
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
@@ -36,9 +37,16 @@ enum Cmd {
         files: Vec<PathBuf>,
     },
     /// Add the context menu entries to the file manager.
-    Install,
+    Install {
+        /// Default presets for all users (Linux packages, as root).
+        #[arg(long, hide = true)]
+        system: bool,
+    },
     /// Remove the context menu entries.
-    Uninstall,
+    Uninstall {
+        #[arg(long, hide = true)]
+        system: bool,
+    },
     /// Print the presets file path (created with the defaults if missing).
     Config,
     /// Open the settings window (presets, context menu entries, conversion options).
@@ -57,6 +65,16 @@ fn main() -> ExitCode {
 }
 
 fn run(cmd: Cmd) -> Result<ExitCode, String> {
+    let print = |msg: String| {
+        println!("{msg}");
+        ExitCode::SUCCESS
+    };
+    // Before loading presets: package scripts run as root and must not create root's presets file.
+    match cmd {
+        Cmd::Install { system: true } => return integrate::install_system().map(print),
+        Cmd::Uninstall { system: true } => return integrate::uninstall_system().map(print),
+        _ => {}
+    }
     let cfg = preset::load()?;
     match cmd {
         Cmd::Convert { preset, files } => {
@@ -86,19 +104,35 @@ fn run(cmd: Cmd) -> Result<ExitCode, String> {
             let p = cfg.presets.iter().find(|p| p.name == name).unwrap();
             Ok(convert_all(p, files, cfg.max_simultaneous))
         }
-        Cmd::Install => integrate::install(&cfg.presets).map(|msg| {
-            println!("{msg}");
-            ExitCode::SUCCESS
+        Cmd::Install { .. } => integrate::install(&cfg.presets).map(|mut msg| {
+            let missing: Vec<String> = tools::missing().iter().map(|(t, why)| format!("{t} ({why})")).collect();
+            if !missing.is_empty() {
+                msg +=
+                    &format!("\nNot installed: {}\nInstall them with: {}", missing.join(", "), tools::install_hint());
+            }
+            print(msg)
         }),
-        Cmd::Uninstall => integrate::uninstall().map(|msg| {
-            println!("{msg}");
-            ExitCode::SUCCESS
-        }),
+        Cmd::Uninstall { .. } => integrate::uninstall().map(print),
         Cmd::Config => {
             println!("{}", preset::config_path().display());
             Ok(ExitCode::SUCCESS)
         }
-        Cmd::Settings => gui::run().map(|_| ExitCode::SUCCESS),
+        Cmd::Settings => {
+            hide_console();
+            gui::run().map(|_| ExitCode::SUCCESS)
+        }
+    }
+}
+
+/// The settings window needs no console; on Windows a console-subsystem exe always gets one.
+fn hide_console() {
+    #[cfg(windows)]
+    {
+        extern "system" {
+            fn FreeConsole() -> i32;
+        }
+        // SAFETY: plain kernel32 call without arguments.
+        unsafe { FreeConsole() };
     }
 }
 

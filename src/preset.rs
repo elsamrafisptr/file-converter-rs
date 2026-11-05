@@ -18,13 +18,43 @@ fn two() -> usize {
 #[derive(Deserialize, Serialize, Clone, Copy, PartialEq, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Output {
-    Aac, Avi, Avif, Flac, Gif, Ico, Jpg, Mkv, Mp3, Mp4, Ogg, Ogv, Pdf, Png, Wav, Webm, Webp,
+    Aac,
+    Avi,
+    Avif,
+    Flac,
+    Gif,
+    Ico,
+    Jpg,
+    Mkv,
+    Mp3,
+    Mp4,
+    Ogg,
+    Ogv,
+    Pdf,
+    Png,
+    Wav,
+    Webm,
+    Webp,
 }
 
 impl Output {
     pub const ALL: [Output; 17] = [
-        Output::Aac, Output::Avi, Output::Avif, Output::Flac, Output::Gif, Output::Ico, Output::Jpg, Output::Mkv,
-        Output::Mp3, Output::Mp4, Output::Ogg, Output::Ogv, Output::Pdf, Output::Png, Output::Wav, Output::Webm,
+        Output::Aac,
+        Output::Avi,
+        Output::Avif,
+        Output::Flac,
+        Output::Gif,
+        Output::Ico,
+        Output::Jpg,
+        Output::Mkv,
+        Output::Mp3,
+        Output::Mp4,
+        Output::Ogg,
+        Output::Ogv,
+        Output::Pdf,
+        Output::Png,
+        Output::Wav,
+        Output::Webm,
         Output::Webp,
     ];
 
@@ -45,16 +75,29 @@ pub enum PostAction {
 #[derive(Deserialize, Serialize, Clone, Copy, Default, PartialEq, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum VideoSpeed {
-    UltraFast, SuperFast, VeryFast, Faster, Fast,
+    UltraFast,
+    SuperFast,
+    VeryFast,
+    Faster,
+    Fast,
     #[default]
     Medium,
-    Slow, Slower, VerySlow,
+    Slow,
+    Slower,
+    VerySlow,
 }
 
 impl VideoSpeed {
     pub const ALL: [VideoSpeed; 9] = [
-        VideoSpeed::UltraFast, VideoSpeed::SuperFast, VideoSpeed::VeryFast, VideoSpeed::Faster, VideoSpeed::Fast,
-        VideoSpeed::Medium, VideoSpeed::Slow, VideoSpeed::Slower, VideoSpeed::VerySlow,
+        VideoSpeed::UltraFast,
+        VideoSpeed::SuperFast,
+        VideoSpeed::VeryFast,
+        VideoSpeed::Faster,
+        VideoSpeed::Fast,
+        VideoSpeed::Medium,
+        VideoSpeed::Slow,
+        VideoSpeed::Slower,
+        VideoSpeed::VerySlow,
     ];
 }
 
@@ -62,7 +105,12 @@ impl VideoSpeed {
 #[serde(rename_all = "lowercase")]
 pub enum AudioMode {
     #[default]
-    Mp3Vbr, Mp3Cbr, Wav8, Wav16, Wav24, Wav32,
+    Mp3Vbr,
+    Mp3Cbr,
+    Wav8,
+    Wav16,
+    Wav24,
+    Wav32,
 }
 
 #[derive(Deserialize, Serialize, Clone, PartialEq)]
@@ -176,7 +224,9 @@ pub fn save(cfg: &Config) -> Result<(), String> {
     let path = config_path();
     std::fs::create_dir_all(path.parent().unwrap()).map_err(|e| e.to_string())?;
     let tmp = path.with_extension("toml.tmp");
-    std::fs::write(&tmp, text).and_then(|_| std::fs::rename(&tmp, &path)).map_err(|e| format!("{}: {e}", path.display()))
+    std::fs::write(&tmp, text)
+        .and_then(|_| std::fs::rename(&tmp, &path))
+        .map_err(|e| format!("{}: {e}", path.display()))
 }
 
 /// Output path from a FileConverter-style template, e.g. `(p)(f)` or `(p:v)(d0)/(f)_small`.
@@ -227,10 +277,7 @@ pub fn unique_path(path: PathBuf) -> PathBuf {
     }
     let stem = path.file_stem().unwrap_or_default().to_string_lossy().into_owned();
     let ext = path.extension().map(|e| format!(".{}", e.to_string_lossy())).unwrap_or_default();
-    (2..)
-        .map(|i| path.with_file_name(format!("{stem} ({i}){ext}")))
-        .find(|p| !p.exists())
-        .unwrap()
+    (2..).map(|i| path.with_file_name(format!("{stem} ({i}){ext}"))).find(|p| !p.exists()).unwrap()
 }
 
 #[cfg(test)]

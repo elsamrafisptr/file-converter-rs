@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+# postinst of the new version re-creates the menus on upgrade.
+/usr/bin/file-converter uninstall --system >/dev/null || true
+#DEBHELPER#

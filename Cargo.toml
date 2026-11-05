@@ -4,6 +4,22 @@ version = "0.1.0"
 edition = "2021"
 description = "Convert files from your file manager's context menu (Rust port of Tichau/FileConverter)"
 license = "GPL-3.0-or-later"
+repository = "https://github.com/elsamrafisptr/file-converter-rs"
+
+[package.metadata.deb]
+maintainer = "Elsam Rafi Saputra <134671598+elsamrafisptr@users.noreply.github.com>"
+section = "utils"
+depends = "$auto, ffmpeg, imagemagick | graphicsmagick-imagemagick-compat, ghostscript"
+suggests = "libreoffice-writer, libreoffice-calc, libreoffice-impress"
+extended-description = "Right-click files in Dolphin or Nautilus to convert video, audio, images, PDFs and documents with presets (Rust port of Tichau/FileConverter)."
+maintainer-scripts = "packaging/linux/debian/"
+assets = [
+    ["target/release/file-converter", "usr/bin/", "755"],
+    ["packaging/linux/file-converter.desktop", "usr/share/applications/", "644"],
+    ["packaging/icons/file-converter.png", "usr/share/icons/hicolor/256x256/apps/", "644"],
+    ["packaging/icons/file-converter.svg", "usr/share/icons/hicolor/scalable/apps/", "644"],
+    ["README.md", "usr/share/doc/file-converter/", "644"],
+]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }

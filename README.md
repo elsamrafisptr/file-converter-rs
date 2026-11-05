@@ -17,26 +17,39 @@ The 70+ default presets come from the original `Settings.default.xml` (CD-audio 
 
 ## Install
 
-1. Install Rust (https://rustup.rs) and the converters you need:
-   - **Kubuntu / Debian / Ubuntu**: `sudo apt install ffmpeg imagemagick ghostscript libreoffice`
-   - **Fedora**: `sudo dnf install ffmpeg ImageMagick ghostscript libreoffice`
-   - **macOS**: `brew install ffmpeg imagemagick ghostscript` and `brew install --cask libreoffice`
-   - **Windows**: `winget install Gyan.FFmpeg ImageMagick.ImageMagick ArtifexSoftware.GhostScript TheDocumentFoundation.LibreOffice`
-     (or drop `ffmpeg.exe`, `magick.exe`, `gswin64c.exe` next to `file-converter.exe`).
-2. Build and register the context menu:
+Download the file for your system from the [latest release](https://github.com/elsamrafisptr/file-converter-rs/releases/latest), then:
 
-   ```sh
-   cargo install --path .
-   file-converter install      # file-converter uninstall removes it again
-   ```
+| System | Download | Install |
+|---|---|---|
+| **Windows 10/11** | `file-converter-setup-x64.exe` | Run it. ffmpeg and ImageMagick are included; the installer can also fetch Ghostscript (PDF) and LibreOffice (Office files) with winget. No admin rights needed. |
+| **Ubuntu, Kubuntu, Debian, Mint, Pop!_OS** | `file-converter_<version>_amd64.deb` | Double-click it, or `sudo apt install ./file-converter_*_amd64.deb`. ffmpeg, ImageMagick and Ghostscript are installed automatically. |
+| **Other Linux** | `file-converter-linux-x86_64.tar.gz` | Extract it and run `./install.sh`, then install the converters it lists (e.g. `sudo dnf install ffmpeg ImageMagick ghostscript`). |
+| **macOS 11+** | `file-converter-macos.dmg` | Drag **File Converter** to Applications and open it once (first time: right-click › **Open**, since the app is not notarized). Then install the converters: `brew install ffmpeg imagemagick ghostscript` ([Homebrew](https://brew.sh)). |
 
-   Run `install` again after moving the binary (saving in the settings window re-installs automatically).
+Then right-click any supported file:
 
-What `install` creates:
+- **Windows**: **File Converter** › preset (Windows 11: under *Show more options*).
+- **Linux, Dolphin**: **File Converter** › preset. **Nautilus**: open *File Converter* from the app menu once, then right-click › **Scripts** › **File Converter**.
+- **macOS**: **Quick Actions** › **File Converter…**, then pick the preset.
 
-- **Linux (KDE Dolphin)**: one service menu per preset in `~/.local/share/kio/servicemenus/`, filtered by MIME type, under *File Converter*.
-  **GNOME Nautilus** (if installed): scripts in `~/.local/share/nautilus/scripts/File Converter/` (right-click › Scripts).
-- **Windows**: a cascading *File Converter* menu for each supported extension under `HKCU\Software\Classes\SystemFileAssociations` (no admin rights; Windows 11 shows it under *Show more options*).
+Converted files appear next to the originals. The **File Converter** app (Start menu, application menu or Applications) opens the settings and lists any missing converter with the command that installs it. LibreOffice is only needed for Word/Excel/PowerPoint files.
+
+Uninstall: Windows › *Installed apps* › File Converter; Debian/Ubuntu › `sudo apt remove file-converter`; tarball › `./install.sh --uninstall`; macOS › `"/Applications/File Converter.app/Contents/MacOS/file-converter" uninstall`, then delete the app.
+
+### Building from source
+
+```sh
+cargo install --path .
+file-converter install      # adds the context menu for the current user; `uninstall` removes it
+```
+
+Installers are built by `.github/workflows/release.yml` when a `v*` tag is pushed (`packaging/` holds the .deb scripts, the Inno Setup script and the macOS app bundle script).
+
+What the context menu consists of:
+
+- **Linux (KDE Dolphin)**: one service menu per preset, filtered by MIME type, under *File Converter* (`~/.local/share/kio/servicemenus/`; the .deb also installs the defaults for all users in `/usr/share/kio/servicemenus/`).
+  **GNOME Nautilus** (if installed): scripts in `~/.local/share/nautilus/scripts/File Converter/`.
+- **Windows**: a cascading *File Converter* menu for each supported extension under `HKCU\Software\Classes\SystemFileAssociations`.
 - **macOS**: a Finder Quick Action *File Converter…* (`~/Library/Services`) that asks which preset to use.
 
 Every menu ends with **Configure presets…**, which opens the settings window (also: `file-converter settings`, or `file-converter` with no arguments):

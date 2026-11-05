@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+# Right-click menu with the default presets for every user (Dolphin).
+if [ "$1" = "configure" ]; then
+	/usr/bin/file-converter install --system >/dev/null || true
+fi
+#DEBHELPER#
