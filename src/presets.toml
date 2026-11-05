@@ -1,0 +1,473 @@
+# File Converter presets. Edit freely; delete this file to restore defaults.
+# Ported from https://github.com/Tichau/FileConverter Settings.default.xml
+
+max_simultaneous = 2
+
+[[preset]]
+name = "To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+audio_bitrate = 155
+
+[[preset]]
+name = "To Mp4"
+output = "mp4"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+audio_bitrate = 155
+
+[[preset]]
+name = "To Mp4 (low quality)"
+output = "mp4"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 20
+audio_bitrate = 96
+
+[[preset]]
+name = "To Webm"
+output = "webm"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 40
+
+[[preset]]
+name = "To Ogv"
+output = "ogv"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 8
+
+[[preset]]
+name = "To Avi"
+output = "avi"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 27
+audio_bitrate = 190
+
+[[preset]]
+name = "To Gif"
+output = "gif"
+inputs = ["xcf", "gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+
+[[preset]]
+name = "To Gif (low quality)"
+output = "gif"
+inputs = ["xcf", "gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+video_scale = 0.75
+fps = 10
+
+[[preset]]
+name = "To Ogg"
+output = "ogg"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+
+[[preset]]
+name = "To Flac"
+output = "flac"
+inputs = ["wav", "ape", "wma", "aiff", "flac"]
+
+[[preset]]
+name = "To Wav"
+output = "wav"
+inputs = ["aac", "aiff", "ape", "flac", "m4a", "mp3", "ogg", "wma", "oga", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "m4b", "opus", "wav"]
+audio_mode = "wav16"
+
+[[preset]]
+name = "To Mp3"
+output = "mp3"
+inputs = ["aac", "aiff", "ape", "flac", "m4a", "ogg", "wma", "wav", "oga", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "m4b", "mp3", "opus"]
+audio_bitrate = 190
+
+[[preset]]
+name = "To Aac"
+output = "aac"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+audio_bitrate = 128
+
+[[preset]]
+name = "Extract DVD to Mp4"
+output = "mp4"
+inputs = ["vob"]
+audio_bitrate = 155
+
+[[preset]]
+name = "Extract DVD to Mkv"
+output = "mkv"
+inputs = ["vob"]
+audio_bitrate = 155
+
+[[preset]]
+name = "Extract DVD to Flac"
+output = "flac"
+inputs = ["vob"]
+
+[[preset]]
+name = "Extract DVD to Ogg"
+output = "ogg"
+inputs = ["vob"]
+audio_bitrate = 192
+
+[[preset]]
+name = "Extract DVD to Mp3"
+output = "mp3"
+inputs = ["vob"]
+audio_bitrate = 225
+
+[[preset]]
+name = "To Png"
+output = "png"
+inputs = ["xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+
+[[preset]]
+name = "To Png (paged)"
+output = "png"
+inputs = ["xcf", "doc", "docx", "odp", "ods", "odt", "pdf", "ppt", "pptx", "xls", "xlsx"]
+
+[[preset]]
+name = "To Webp"
+output = "webp"
+inputs = ["xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+
+[[preset]]
+name = "To Avif"
+output = "avif"
+inputs = ["xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 50
+
+[[preset]]
+name = "To Jpg"
+output = "jpg"
+inputs = ["xcf", "arw", "avif", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+
+[[preset]]
+name = "To Ico"
+output = "ico"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+
+[[preset]]
+name = "To Pdf"
+output = "pdf"
+inputs = ["xcf", "doc", "docx", "odp", "ods", "odt", "ppt", "pptx", "xls", "xlsx", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+
+[[preset]]
+name = "Scale 75%/To Mkv"
+output = "mkv"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_scale = 0.75
+audio_bitrate = 155
+
+[[preset]]
+name = "Scale 75%/To Mp4"
+output = "mp4"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_scale = 0.75
+audio_bitrate = 155
+
+[[preset]]
+name = "Scale 75%/To Webm"
+output = "webm"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 40
+video_scale = 0.75
+
+[[preset]]
+name = "Scale 75%/To Ogv"
+output = "ogv"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 8
+video_scale = 0.75
+
+[[preset]]
+name = "Scale 75%/To Avi"
+output = "avi"
+inputs = ["gif", "3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv"]
+video_quality = 27
+video_scale = 0.75
+audio_bitrate = 190
+
+[[preset]]
+name = "Scale 75%/To Png"
+output = "png"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_scale = 0.75
+
+[[preset]]
+name = "Scale 75%/To Webp"
+output = "webp"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_scale = 0.75
+
+[[preset]]
+name = "Scale 75%/To Jpg"
+output = "jpg"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_scale = 0.75
+
+[[preset]]
+name = "Scale 25%/To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_scale = 0.25
+audio_bitrate = 155
+
+[[preset]]
+name = "Scale 25%/To Mp4"
+output = "mp4"
+inputs = ["gif", "3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "3gpp", "mpg", "rm", "ts"]
+video_scale = 0.25
+audio_bitrate = 155
+
+[[preset]]
+name = "Scale 25%/To Webm"
+output = "webm"
+inputs = ["avi", "bik", "flv", "mkv", "mov", "mp4", "3gp", "webm", "wmv", "m4v", "mpeg", "ogv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 40
+video_scale = 0.25
+
+[[preset]]
+name = "Scale 25%/To Ogv"
+output = "ogv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 8
+video_scale = 0.25
+
+[[preset]]
+name = "Scale 25%/To Avi"
+output = "avi"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 27
+video_scale = 0.25
+audio_bitrate = 190
+
+[[preset]]
+name = "Scale 25%/To Png"
+output = "png"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_scale = 0.25
+
+[[preset]]
+name = "Scale 25%/To Webp"
+output = "webp"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_scale = 0.25
+
+[[preset]]
+name = "Scale 25%/To Jpg"
+output = "jpg"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_scale = 0.25
+
+[[preset]]
+name = "Scale 720p/To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v libx264 -preset medium -crf 21 -c:a aac -qscale:a 1.3 -vf "scale=1280:720,format=yuv420p"'
+
+[[preset]]
+name = "Scale 720p/To Mp4"
+output = "mp4"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v libx264 -preset medium -crf 21 -c:a aac -qscale:a 1.3 -vf "scale=1280:720,format=yuv420p"'
+
+[[preset]]
+name = "Scale 720p/To Webm"
+output = "webm"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v libvpx-vp9 -crf 23 -b:v 0 -c:a libvorbis -qscale:a 5 -vf "scale=1280:720,format=yuv420p"'
+
+[[preset]]
+name = "Scale 720p/To Ogv"
+output = "ogv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-codec:v libtheora -qscale:v 8 -codec:a libvorbis -qscale:a 5 -vf "scale=1280:720,format=yuv420p"'
+
+[[preset]]
+name = "Scale 720p/To Avi"
+output = "avi"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v mpeg4 -vtag xvid -qscale:v 4 -c:a libmp3lame -qscale:a 2 -id3v2_version 3 -write_id3v1 1 -vf "scale=1280:720,format=yuv420p"'
+
+[[preset]]
+name = "Scale 1080p/To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "webm", "wmv", "gif", "3gpp", "mpg", "ogv", "rm", "ts"]
+ffmpeg_custom = '-c:v libx264 -preset medium -crf 21 -c:a aac -qscale:a 1.3 -vf "scale=1920:1080,format=yuv420p"'
+
+[[preset]]
+name = "Scale 1080p/To Mp4"
+output = "mp4"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v libx264 -preset medium -crf 21 -c:a aac -qscale:a 1.3 -vf "scale=1920:1080,format=yuv420p"'
+
+[[preset]]
+name = "Scale 1080p/To Webm"
+output = "webm"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v libvpx-vp9 -crf 23 -b:v 0 -c:a libvorbis -qscale:a 5 -vf "scale=1920:1080,format=yuv420p"'
+
+[[preset]]
+name = "Scale 1080p/To Ogv"
+output = "ogv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-codec:v libtheora -qscale:v 8 -codec:a libvorbis -qscale:a 5 -vf "scale=1920:1080,format=yuv420p"'
+
+[[preset]]
+name = "Scale 1080p/To Avi"
+output = "avi"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+ffmpeg_custom = '-c:v mpeg4 -vtag xvid -qscale:v 4 -c:a libmp3lame -qscale:a 2 -id3v2_version 3 -write_id3v1 1 -vf "scale=1920:1080,format=yuv420p"'
+
+[[preset]]
+name = "Rotate left/To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_rotation = 90.0
+audio_bitrate = 155
+
+[[preset]]
+name = "Rotate left/To Mp4"
+output = "mp4"
+inputs = ["gif", "3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "3gpp", "mpg", "rm", "ts"]
+video_rotation = 90.0
+audio_bitrate = 155
+
+[[preset]]
+name = "Rotate left/To Mp4 (low quality)"
+output = "mp4"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 20
+video_rotation = 90.0
+audio_bitrate = 96
+
+[[preset]]
+name = "Rotate left/To Webm"
+output = "webm"
+inputs = ["avi", "bik", "flv", "mkv", "mov", "mp4", "3gp", "webm", "wmv", "m4v", "mpeg", "ogv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 40
+video_rotation = 90.0
+
+[[preset]]
+name = "Rotate left/To Ogv"
+output = "ogv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 8
+video_rotation = 90.0
+
+[[preset]]
+name = "Rotate left/To Avi"
+output = "avi"
+inputs = ["gif", "3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "3gpp", "mpg", "rm", "ts"]
+video_quality = 27
+video_rotation = 90.0
+audio_bitrate = 190
+
+[[preset]]
+name = "Rotate left/To Png"
+output = "png"
+inputs = ["arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_rotation = 90.0
+
+[[preset]]
+name = "Rotate left/To Webp"
+output = "webp"
+inputs = ["arw", "bmp", "cr2", "exr", "ico", "jpg", "jpeg", "raf", "png", "psd", "svg", "tga", "tif", "tiff", "xcf", "webp", "dng", "nef", "dds", "heic", "jfif"]
+image_quality = 40
+image_rotation = 90.0
+
+[[preset]]
+name = "Rotate left/To Jpg"
+output = "jpg"
+inputs = ["arw", "bmp", "cr2", "exr", "ico", "jpg", "jpeg", "raf", "png", "psd", "svg", "tga", "tif", "tiff", "xcf", "webp", "dng", "nef", "jfif", "heic", "dds"]
+image_quality = 40
+image_rotation = 90.0
+
+[[preset]]
+name = "Rotate right/To Mkv"
+output = "mkv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_rotation = 270.0
+audio_bitrate = 155
+
+[[preset]]
+name = "Rotate right/To Mp4"
+output = "mp4"
+inputs = ["avi", "bik", "flv", "mkv", "mov", "mp4", "3gp", "webm", "wmv", "m4v", "mpeg", "ogv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_rotation = 270.0
+audio_bitrate = 155
+
+[[preset]]
+name = "Rotate right/To Mp4 (low quality)"
+output = "mp4"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 20
+video_rotation = 270.0
+audio_bitrate = 96
+
+[[preset]]
+name = "Rotate right/To Webm"
+output = "webm"
+inputs = ["avi", "bik", "flv", "mkv", "mov", "mp4", "3gp", "webm", "wmv", "m4v", "mpeg", "ogv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 40
+video_rotation = 270.0
+
+[[preset]]
+name = "Rotate right/To Ogv"
+output = "ogv"
+inputs = ["3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "gif", "3gpp", "mpg", "rm", "ts"]
+video_quality = 8
+video_rotation = 270.0
+
+[[preset]]
+name = "Rotate right/To Avi"
+output = "avi"
+inputs = ["gif", "3gp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpeg", "ogv", "webm", "wmv", "3gpp", "mpg", "rm", "ts"]
+video_quality = 27
+video_rotation = 270.0
+audio_bitrate = 190
+
+[[preset]]
+name = "Rotate right/To Png"
+output = "png"
+inputs = ["arw", "bmp", "cr2", "exr", "jpg", "jpeg", "raf", "png", "psd", "svg", "tga", "tif", "tiff", "webp", "dng", "nef", "dds", "heic", "ico", "jfif"]
+image_rotation = 270.0
+
+[[preset]]
+name = "Rotate right/To Webp"
+output = "webp"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_rotation = 270.0
+
+[[preset]]
+name = "Rotate right/To Jpg"
+output = "jpg"
+inputs = ["xcf", "arw", "bmp", "cr2", "dds", "dng", "exr", "heic", "ico", "jfif", "jpg", "jpeg", "nef", "png", "psd", "raf", "svg", "tga", "tif", "tiff", "webp"]
+image_quality = 40
+image_rotation = 270.0
+
+[[preset]]
+name = "Tempo - Pitch/To Mp3 (25% slower)"
+output = "mp3"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+ffmpeg_custom = '-b:a 192k -filter:a "atempo=0.75"'
+
+[[preset]]
+name = "Tempo - Pitch/To Mp3 (25% faster)"
+output = "mp3"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+ffmpeg_custom = '-b:a 192k -filter:a "atempo=1.25"'
+
+[[preset]]
+name = "Tempo - Pitch/To Mp3 (pitched -1st)"
+output = "mp3"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+ffmpeg_custom = '-filter:a "rubberband=pitch=0.9438743126816935"'
+
+[[preset]]
+name = "Tempo - Pitch/To Mp3 (pitched +1st)"
+output = "mp3"
+inputs = ["3gp", "3gpp", "avi", "bik", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "mpeg", "ogv", "rm", "ts", "webm", "wmv", "aac", "aiff", "ape", "flac", "m4a", "m4b", "mp3", "oga", "ogg", "opus", "wav", "wma"]
+ffmpeg_custom = '-filter:a "rubberband=pitch=1.059463094352953"'

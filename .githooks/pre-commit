@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Rejects commits containing files larger than MAX_UNITS, where units = bytes / 4
+# (a rough token count). Enable once per clone: git config core.hooksPath .githooks
+MAX_UNITS=20000
+
+# Files allowed to exceed the limit: generated or verbatim content nobody should split.
+is_excluded() {
+	case "$1" in
+	Cargo.lock) return 0 ;;
+	*) return 1 ;;
+	esac
+}
+
+failed=0
+# Staged (not working-tree) content of added/copied/modified/renamed files.
+git diff --cached --name-only --diff-filter=ACMR -z | {
+	while IFS= read -r -d '' file; do
+		is_excluded "$file" && continue
+		bytes=$(git cat-file -s ":$file")
+		units=$((bytes / 4))
+		if [ "$units" -gt "$MAX_UNITS" ]; then
+			echo "pre-commit: $file is $units units ($bytes bytes / 4), limit is $MAX_UNITS." >&2
+			failed=1
+		fi
+	done
+	if [ "$failed" -ne 0 ]; then
+		echo "pre-commit: split the file(s) above or add them to is_excluded in .githooks/pre-commit." >&2
+		exit 1
+	fi
+}
