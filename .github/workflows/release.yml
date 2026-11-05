@@ -57,6 +57,7 @@ jobs:
 
   windows:
     runs-on: windows-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -86,13 +87,16 @@ jobs:
           & dist/tools/magick.exe -version
       - name: Ghostscript for the PDF test (also checks the versioned-folder lookup)
         shell: pwsh
+        timeout-minutes: 5
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
           $gs = (gh api repos/ArtifexSoftware/ghostpdl-downloads/releases/latest | ConvertFrom-Json).assets |
             Where-Object name -match 'w64\.exe$' | Select-Object -First 1
           Invoke-WebRequest $gs.browser_download_url -OutFile gs-setup.exe
-          Start-Process ./gs-setup.exe -ArgumentList '/S' -Wait
-          if (-not (Get-ChildItem "$env:ProgramFiles\gs\*\bin\gswin64c.exe")) { throw "Ghostscript not installed" }
+          # The NSIS installer hangs when run silently on the runner; unpack it into the same layout instead.
+          7z x gs-setup.exe "-o$env:ProgramFiles\gs\gs10.99.0" -x!`$PLUGINSDIR -y | Out-Null
+          if (-not (Test-Path "$env:ProgramFiles\gs\gs10.99.0\bin\gswin64c.exe")) { throw "Ghostscript not unpacked" }
+          & "$env:ProgramFiles\gs\gs10.99.0\bin\gswin64c.exe" --version
       - name: "Test: convert with the bundled tools (portable layout)"
         shell: bash
         run: |
