@@ -36,7 +36,7 @@ jobs:
           test -f /usr/share/kio/servicemenus/file-converter-000.desktop
           test -f /usr/share/kio/servicemenus/file-converter-settings.desktop
           /usr/bin/file-converter install | tee install.txt
-          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
+          if grep "^Not installed:" install.txt | grep -qE "ffmpeg|ImageMagick|Ghostscript"; then exit 1; fi
           /usr/bin/file-converter uninstall
           bash packaging/smoke-test.sh /usr/bin/file-converter
           sudo apt-get remove -y file-converter
@@ -85,7 +85,14 @@ jobs:
           }
           & dist/tools/magick.exe -version
       - name: Ghostscript for the PDF test (also checks the versioned-folder lookup)
-        run: choco install ghostscript -y --no-progress
+        shell: pwsh
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          $gs = (gh api repos/ArtifexSoftware/ghostpdl-downloads/releases/latest | ConvertFrom-Json).assets |
+            Where-Object name -match 'w64\.exe$' | Select-Object -First 1
+          Invoke-WebRequest $gs.browser_download_url -OutFile gs-setup.exe
+          Start-Process ./gs-setup.exe -ArgumentList '/S' -Wait
+          if (-not (Get-ChildItem "$env:ProgramFiles\gs\*\bin\gswin64c.exe")) { throw "Ghostscript not installed" }
       - name: "Test: convert with the bundled tools (portable layout)"
         shell: bash
         run: |
@@ -114,7 +121,7 @@ jobs:
         run: |
           APP="$(cygpath "$LOCALAPPDATA")/Programs/File Converter"
           "$APP/file-converter.exe" install | tee install.txt
-          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
+          if grep "^Not installed:" install.txt | grep -qE "ffmpeg|ImageMagick|Ghostscript"; then exit 1; fi
           PATH="$APP/tools:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$APP/file-converter.exe"
       - name: "Test: uninstall removes files and context menu"
         shell: pwsh
@@ -146,7 +153,7 @@ jobs:
           codesign --verify --deep "/Applications/File Converter.app"
           "$BIN" install | tee install.txt
           # ffmpeg-full is keg-only (not in PATH): the app must still find it and see all encoders.
-          if grep -qE "ffmpeg|ImageMagick|Ghostscript" install.txt; then exit 1; fi
+          if grep "^Not installed:" install.txt | grep -qE "ffmpeg|ImageMagick|Ghostscript"; then exit 1; fi
           WF="$HOME/Library/Services/File Converter.workflow/Contents"
           plutil -lint "$WF/Info.plist" "$WF/document.wflow"
           PATH="$(brew --prefix ffmpeg-full)/bin:$PATH" SMOKE_AVIF=1 SMOKE_PDF=1 bash packaging/smoke-test.sh "$BIN"
