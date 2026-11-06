@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Changelog — File Converter</title>
+	<meta name="description" content="What is new in each version of File Converter: new features, fixes and changes.">
+	<link rel="canonical" href="https://elsamrafisptr.github.io/file-converter-rs/changelog.html">
+	<meta name="theme-color" content="#1E2650">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="File Converter">
+	<meta property="og:title" content="File Converter changelog">
+	<meta property="og:description" content="What is new in each version of File Converter.">
+	<meta property="og:url" content="https://elsamrafisptr.github.io/file-converter-rs/changelog.html">
+	<meta property="og:image" content="https://elsamrafisptr.github.io/file-converter-rs/images/og-image.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta name="twitter:card" content="summary_large_image">
+	<link rel="alternate" type="application/atom+xml" title="File Converter releases" href="https://github.com/elsamrafisptr/file-converter-rs/releases.atom">
+	<link rel="icon" href="favicon.ico" sizes="any">
+	<link rel="icon" type="image/png" href="images/icon-192.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Fira+Mono&family=Fira+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+	<div class="wrap">
+		<a class="brand" href="./"><img src="images/icon-192.png" alt="" width="32" height="32">File Converter</a>
+		<nav aria-label="Main">
+			<a href="download.html">Download</a>
+			<a href="./#how">Guide</a>
+			<a href="./#help">Help</a>
+			<a href="changelog.html" aria-current="page">Changelog</a>
+			<a href="donate.html">Donate</a>
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">GitHub</a>
+		</nav>
+	</div>
+</header>
+
+<div class="page-hero">
+	<div class="wrap">
+		<h1>Changelog</h1>
+		<p>What is new in each version. Want to know when a new version is out? Click <b>Watch › Custom › Releases</b> on <a href="https://github.com/elsamrafisptr/file-converter-rs" style="color:#fff">GitHub</a>, or follow the <a href="https://github.com/elsamrafisptr/file-converter-rs/releases.atom" style="color:#fff">releases feed</a>.</p>
+	</div>
+</div>
+
+<section class="wide">
+	<div class="wrap">
+		<div>
+			<article class="release latest" id="v0.1.1">
+				<h3>Version 0.1.1 <span class="badge">Latest</span></h3>
+				<p class="date">5 November 2026 · <a href="download.html">Download</a> · <a href="https://github.com/elsamrafisptr/file-converter-rs/releases/tag/v0.1.1">Release on GitHub</a></p>
+				<h4>Changed</h4>
+				<ul>
+					<li>The Windows installer is half the size: <b>61 MB</b> instead of 124 MB. It now only includes the ImageMagick program File Converter uses.</li>
+					<li>macOS: install <code>ffmpeg-full</code> from Homebrew. The plain <code>ffmpeg</code> package cannot make WebM, OGG and OGV files.</li>
+				</ul>
+				<h4>Added</h4>
+				<ul>
+					<li>The app now warns you when your ffmpeg is missing something the presets need.</li>
+					<li>Every installer is tested automatically before a release: install, add the menu, convert files, uninstall.</li>
+				</ul>
+				<h4>Fixed</h4>
+				<ul>
+					<li>PDF to PNG: pages are always named <code>name-1.png</code>, <code>name-2.png</code>, … even when <code>name.png</code> already exists.</li>
+				</ul>
+			</article>
+
+			<article class="release" id="v0.1.0">
+				<h3>Version 0.1.0</h3>
+				<p class="date">5 November 2026 · First release · <a href="https://github.com/elsamrafisptr/file-converter-rs/releases/tag/v0.1.0">Release on GitHub</a></p>
+				<ul>
+					<li>Right-click menu on Windows (Explorer), Linux (Dolphin and Files/Nautilus) and macOS (Finder Quick Action).</li>
+					<li>73 ready-made presets from the original FileConverter: video, audio, images, PDF and Office documents, plus scale, rotate and speed/pitch presets.</li>
+					<li>Settings window to add, change and reorder presets, and to choose file types and conversion quality.</li>
+					<li>Several files are converted at the same time, with a notification when done.</li>
+					<li>Never overwrites a file: <code>video.mp4</code> becomes <code>video (2).mp4</code>.</li>
+					<li>Optional: move the original file to a “Conversion Archive” folder, or delete it, after conversion.</li>
+					<li>Installers: Windows setup, macOS app (.dmg), Linux .deb and .tar.gz.</li>
+				</ul>
+			</article>
+		</div>
+	</div>
+</section>
+
+<footer>
+	<div class="wrap">
+		<p>File Converter is free software under the <a href="https://github.com/elsamrafisptr/file-converter-rs/blob/main/LICENSE">GPL v3</a>, made by <a href="https://github.com/elsamrafisptr">Elsam Rafi Saputra</a>.<br>
+			Based on <a href="https://github.com/Tichau/FileConverter">FileConverter</a> by Adrien Allard (<a href="https://file-converter.io/">file-converter.io</a>).</p>
+		<p><a href="download.html">Download</a> · <a href="changelog.html">Changelog</a> · <a href="donate.html">Donate</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs/issues">Report a problem</a> ·
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">Source code</a></p>
+	</div>
+</footer>
+
+</body>
+</html>

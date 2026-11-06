@@ -3,26 +3,58 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>File Converter — convert files with a right-click</title>
-	<meta name="description" content="File Converter is a free tool to convert and compress video, audio, images and documents from the right-click menu on Windows, macOS and Linux.">
+	<title>File Converter — free tool to convert files with a right-click</title>
+	<meta name="description" content="File Converter is a free, open source tool to convert and compress video, audio, images and documents from the right-click menu on Windows, macOS and Linux.">
+	<link rel="canonical" href="https://elsamrafisptr.github.io/file-converter-rs/">
 	<meta name="theme-color" content="#1E2650">
-	<link rel="icon" href="images/icon.png">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="File Converter">
+	<meta property="og:title" content="File Converter — convert files with a right-click">
+	<meta property="og:description" content="Free and open source. Convert video, audio, images and documents in two clicks on Windows, macOS and Linux.">
+	<meta property="og:url" content="https://elsamrafisptr.github.io/file-converter-rs/">
+	<meta property="og:image" content="https://elsamrafisptr.github.io/file-converter-rs/images/og-image.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="File Converter: convert files with a right-click">
+	<meta name="twitter:card" content="summary_large_image">
+	<link rel="icon" href="favicon.ico" sizes="any">
+	<link rel="icon" type="image/png" href="images/icon-192.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="manifest" href="site.webmanifest">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Fira+Mono&family=Fira+Sans:wght@400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="style.css">
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		"name": "File Converter",
+		"description": "Free, open source tool to convert and compress video, audio, images and documents from the right-click menu.",
+		"url": "https://elsamrafisptr.github.io/file-converter-rs/",
+		"downloadUrl": "https://elsamrafisptr.github.io/file-converter-rs/download.html",
+		"image": "https://elsamrafisptr.github.io/file-converter-rs/images/og-image.png",
+		"applicationCategory": "MultimediaApplication",
+		"operatingSystem": "Windows 10, Windows 11, macOS 11 or newer, Linux",
+		"softwareVersion": "0.1.1",
+		"license": "https://www.gnu.org/licenses/gpl-3.0.html",
+		"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+		"author": { "@type": "Person", "name": "Elsam Rafi Saputra", "url": "https://github.com/elsamrafisptr" },
+		"isBasedOn": "https://github.com/Tichau/FileConverter"
+	}
+	</script>
 </head>
 <body>
 
 <header class="topbar">
 	<div class="wrap">
-		<a class="brand" href="#"><img src="images/icon.png" alt="">File Converter</a>
-		<nav>
-			<a href="#download">Download</a>
-			<a href="#how">How to use</a>
-			<a href="#formats">Formats</a>
-			<a href="#settings">Settings</a>
-			<a href="#help">Help</a>
+		<a class="brand" href="./"><img src="images/icon-192.png" alt="" width="32" height="32">File Converter</a>
+		<nav aria-label="Main">
+			<a href="download.html">Download</a>
+			<a href="./#how">Guide</a>
+			<a href="./#help">Help</a>
+			<a href="changelog.html">Changelog</a>
+			<a href="donate.html">Donate</a>
 			<a href="https://github.com/elsamrafisptr/file-converter-rs">GitHub</a>
 		</nav>
 	</div>
@@ -33,10 +65,10 @@
 		<div>
 			<h1>File Converter</h1>
 			<p class="lead">Convert and compress your files in two clicks. Right-click a file, choose a format, done.</p>
-			<a class="button" href="#download">Download</a>
+			<a class="button" href="download.html">Download</a>
 			<a class="button ghost" href="#how">How it works</a>
 			<p class="version">Version 0.1.1 · Free and open source · Windows, macOS and Linux ·
-				<a href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest">Release notes</a></p>
+				<a href="changelog.html">What's new</a></p>
 		</div>
 		<svg viewBox="0 0 420 300" role="img" aria-label="A right-click menu with File Converter and a list of formats">
 			<rect x="20" y="40" width="70" height="88" rx="6" fill="#fff"/>
@@ -79,41 +111,17 @@
 	</div>
 </section>
 
-<section id="download" class="alt wide">
+<section id="download" class="alt">
 	<div class="wrap">
-		<h2>Download and install</h2>
+		<h2>Get it</h2>
 		<div>
-			<div class="cards">
-				<div class="card os">
-					<h3>Windows 10 and 11</h3>
-					<ol>
-						<li>Download the installer.</li>
-						<li>Open it and click <b>Next</b> until it is done. You do not need admin rights.</li>
-						<li>If Windows says “Windows protected your PC”, click <b>More info</b>, then <b>Run anyway</b>.</li>
-					</ol>
-					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-setup-x64.exe">Download for Windows</a>
-					<p class="muted">61 MB. Everything for video, audio and images is included.</p>
-				</div>
-				<div class="card os">
-					<h3>macOS 11 or newer</h3>
-					<ol>
-						<li>Download and open the <code>.dmg</code> file.</li>
-						<li>Drag <b>File Converter</b> into <b>Applications</b>.</li>
-						<li>Right-click the app and choose <b>Open</b> (only the first time).</li>
-						<li>Install the converters with <a href="https://brew.sh">Homebrew</a>:</li>
-					</ol>
-					<pre><code>brew install ffmpeg-full imagemagick ghostscript</code></pre>
-					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-macos.dmg">Download for macOS</a>
-				</div>
-				<div class="card os">
-					<h3>Linux</h3>
-					<p><b>Ubuntu, Kubuntu, Debian, Mint:</b> download the <code>.deb</code> file and open it, or run:</p>
-					<pre><code>sudo apt install ./file-converter_0.1.1-1_amd64.deb</code></pre>
-					<a class="button" href="https://github.com/elsamrafisptr/file-converter-rs/releases/download/v0.1.1/file-converter_0.1.1-1_amd64.deb">Download .deb</a>
-					<p class="muted" style="margin-top:14px"><b>Other Linux:</b> download the <a href="https://github.com/elsamrafisptr/file-converter-rs/releases/latest/download/file-converter-linux-x86_64.tar.gz">.tar.gz file</a>, unpack it and run <code>./install.sh</code>.</p>
-				</div>
+			<p>Choose your system. The <a href="download.html">download page</a> has step-by-step install help.</p>
+			<div class="os-buttons">
+				<a class="button" href="download.html#windows">Windows</a>
+				<a class="button" href="download.html#macos">macOS</a>
+				<a class="button" href="download.html#linux">Linux</a>
 			</div>
-			<p class="note" style="margin-top:24px">File Converter uses free tools to do the work: <b>ffmpeg</b> (video and audio), <b>ImageMagick</b> (images), <b>Ghostscript</b> (PDF pages) and <b>LibreOffice</b> (Word, Excel and PowerPoint). If one is missing, the File Converter app tells you and shows the command to install it.</p>
+			<p class="note">File Converter uses free tools to do the work: <b>ffmpeg</b> (video and audio), <b>ImageMagick</b> (images), <b>Ghostscript</b> (PDF pages) and <b>LibreOffice</b> (Word, Excel and PowerPoint). If one is missing, the File Converter app tells you and shows the command to install it.</p>
 		</div>
 	</div>
 </section>
@@ -227,11 +235,11 @@ file-converter settings                     # open the settings window</code></p
 
 <footer>
 	<div class="wrap">
-		<p>File Converter is free software under the <a href="https://github.com/elsamrafisptr/file-converter-rs/blob/main/LICENSE">GPL v3</a>.<br>
+		<p>File Converter is free software under the <a href="https://github.com/elsamrafisptr/file-converter-rs/blob/main/LICENSE">GPL v3</a>, made by <a href="https://github.com/elsamrafisptr">Elsam Rafi Saputra</a>.<br>
 			Based on <a href="https://github.com/Tichau/FileConverter">FileConverter</a> by Adrien Allard (<a href="https://file-converter.io/">file-converter.io</a>).</p>
-		<p><a href="https://github.com/elsamrafisptr/file-converter-rs">Source code</a> ·
+		<p><a href="download.html">Download</a> · <a href="changelog.html">Changelog</a> · <a href="donate.html">Donate</a> ·
 			<a href="https://github.com/elsamrafisptr/file-converter-rs/issues">Report a problem</a> ·
-			<a href="https://github.com/elsamrafisptr/file-converter-rs/releases">All versions</a></p>
+			<a href="https://github.com/elsamrafisptr/file-converter-rs">Source code</a></p>
 	</div>
 </footer>
 

@@ -1,0 +1,14 @@
+{
+	"name": "File Converter",
+	"short_name": "File Converter",
+	"description": "Convert and compress files with a right-click.",
+	"start_url": "/file-converter-rs/",
+	"scope": "/file-converter-rs/",
+	"display": "browser",
+	"background_color": "#FFFFFF",
+	"theme_color": "#1E2650",
+	"icons": [
+		{ "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png" }
+	]
+}
