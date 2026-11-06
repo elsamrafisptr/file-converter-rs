@@ -207,3 +207,12 @@ fn notify(summary: &str, body: &str) {
         let _ = notify_rust::Notification::new().summary(summary).body(&body).appname("File Converter").show();
     }
 }
+
+#[cfg(test)]
+#[test]
+fn settings_accepts_file_manager_args() {
+    // Dolphin appends the selected files to "Configure presets…"; rejecting them meant no window.
+    let cli = Cli::try_parse_from(["file-converter", "settings", "/a b.png", "/c.png"]).unwrap();
+    assert!(matches!(cli.cmd, Some(Cmd::Settings { .. })));
+    assert!(Cli::try_parse_from(["file-converter", "settings"]).is_ok());
+}
