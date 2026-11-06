@@ -1,6 +1,6 @@
 [package]
 name = "file-converter"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Convert files from your file manager's context menu (Rust port of Tichau/FileConverter)"
 license = "GPL-3.0-or-later"
