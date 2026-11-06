@@ -8,7 +8,8 @@ All notable changes to File Converter. Also on the website: https://elsamrafispt
 - Linux (Dolphin): **Configure presets…** in the right-click menu opened nothing. It now opens the settings window, once, however many files are selected.
 
 ### Changed
-- The settings window opens faster and uses less memory. The program is smaller: the Windows installer is 59 MB instead of 61 MB.
+- The settings window opens faster and uses less memory.
+- Smaller downloads: macOS 7.8 MB instead of 11.3 MB, Linux .deb 4.5 MB instead of 6.0 MB, .tar.gz 6.5 MB instead of 8.5 MB, Windows 59.6 MB instead of 61.2 MB.
 - The settings window shows the File Converter icon.
 - **Restore defaults** sits apart from **Save**, so it is harder to click by mistake.
 
