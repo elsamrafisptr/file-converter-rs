@@ -56,13 +56,13 @@ What the context menu consists of:
 
 Every menu ends with **Configure presets…**, which opens the settings window (also: `file-converter settings`, or `file-converter` with no arguments):
 
-- add, duplicate, delete and reorder presets (a `/` in the name makes a sub-menu);
+- add, duplicate, delete, reorder and search presets (a `/` in the name makes a sub-menu);
 - choose the output type and which input file types the preset appears on;
 - output file name template and what to do with the input afterwards (keep / archive / delete);
 - conversion settings for the output type: video quality, encoding speed, audio bitrate, scale, rotation, FPS, MP3 VBR/CBR, WAV bit depth, channels, image quality, max size, …, or fully custom ffmpeg arguments;
 - number of simultaneous conversions.
 
-**Save** writes `presets.toml` and refreshes the context menu.
+**Save** (Ctrl+S, ⌘S on macOS) writes `presets.toml` and refreshes the context menu.
 
 ## Command line
 
