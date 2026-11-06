@@ -1,6 +1,6 @@
 [package]
 name = "file-converter"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Convert files from your file manager's context menu (Rust port of Tichau/FileConverter)"
 license = "GPL-3.0-or-later"
@@ -28,10 +28,23 @@ toml = { version = "0.8", features = ["preserve_order"] }
 dirs = "5"
 shlex = "1"
 indicatif = "0.17"
-eframe = "0.37"
+# OpenGL (glow) instead of the wgpu/Vulkan default: same look, much less memory and binary size.
+eframe = { version = "0.37", default-features = false, features = [
+    "accesskit",
+    "clipboard",
+    "default_fonts",
+    "glow",
+    "system_fonts",
+    "wayland",
+    "x11",
+] }
 
 [target.'cfg(not(target_os = "macos"))'.dependencies]
 notify-rust = "4"
+
+# eframe's `winit/default` (dropped with its default features): Wayland loaded at runtime, GNOME window decorations.
+[target.'cfg(all(unix, not(target_os = "macos")))'.dependencies]
+winit = "0.30"
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.52"

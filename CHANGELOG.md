@@ -2,6 +2,21 @@
 
 All notable changes to File Converter. Also on the website: https://elsamrafisptr.github.io/file-converter-rs/changelog.html
 
+## 0.1.2 — 2026-11-06
+
+### Fixed
+- Linux (Dolphin): **Configure presets…** in the right-click menu opened nothing. It now opens the settings window, once, however many files are selected.
+
+### Changed
+- The settings window opens faster and uses less memory. The program is smaller: the Windows installer is 59 MB instead of 61 MB.
+- The settings window shows the File Converter icon.
+- **Restore defaults** sits apart from **Save**, so it is harder to click by mistake.
+
+### Added
+- Search box above the preset list.
+- Save with Ctrl+S (⌘S on macOS).
+- New, copied and moved presets scroll into view.
+
 ## 0.1.1 — 2026-11-05
 
 ### Changed
