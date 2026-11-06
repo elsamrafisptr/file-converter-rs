@@ -116,7 +116,8 @@ fn write_menus(dir: &Path, presets: &[Preset], exe_s: &str) -> R<(HashSet<String
     all_types.sort();
     all_types.dedup();
     if !all_types.is_empty() {
-        let exec = format!("{} settings", exec_arg(&exe_s));
+        // KIO appends a field code when none is given (one process per file with `%f`); `%F` opens one window.
+        let exec = format!("{} settings %F", exec_arg(&exe_s));
         let actions = "_SEPARATOR_;zz-settings";
         write(
             "file-converter-settings.desktop",

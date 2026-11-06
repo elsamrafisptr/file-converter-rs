@@ -50,11 +50,15 @@ enum Cmd {
     /// Print the presets file path (created with the defaults if missing).
     Config,
     /// Open the settings window (presets, context menu entries, conversion options).
-    Settings,
+    Settings {
+        /// Ignored: file managers pass the selected files to the "Configure presets…" entry.
+        #[arg(hide = true)]
+        files: Vec<PathBuf>,
+    },
 }
 
 fn main() -> ExitCode {
-    match run(Cli::parse().cmd.unwrap_or(Cmd::Settings)) {
+    match run(Cli::parse().cmd.unwrap_or(Cmd::Settings { files: vec![] })) {
         Ok(code) => code,
         Err(e) => {
             eprintln!("error: {e}");
@@ -117,7 +121,7 @@ fn run(cmd: Cmd) -> Result<ExitCode, String> {
             println!("{}", preset::config_path().display());
             Ok(ExitCode::SUCCESS)
         }
-        Cmd::Settings => {
+        Cmd::Settings { .. } => {
             hide_console();
             gui::run().map(|_| ExitCode::SUCCESS)
         }
