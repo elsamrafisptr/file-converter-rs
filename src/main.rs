@@ -50,11 +50,15 @@ enum Cmd {
     /// Print the presets file path (created with the defaults if missing).
     Config,
     /// Open the settings window (presets, context menu entries, conversion options).
-    Settings,
+    Settings {
+        /// Ignored: file managers pass the selected files to the "Configure presets…" entry.
+        #[arg(hide = true)]
+        files: Vec<PathBuf>,
+    },
 }
 
 fn main() -> ExitCode {
-    match run(Cli::parse().cmd.unwrap_or(Cmd::Settings)) {
+    match run(Cli::parse().cmd.unwrap_or(Cmd::Settings { files: vec![] })) {
         Ok(code) => code,
         Err(e) => {
             eprintln!("error: {e}");
@@ -117,7 +121,7 @@ fn run(cmd: Cmd) -> Result<ExitCode, String> {
             println!("{}", preset::config_path().display());
             Ok(ExitCode::SUCCESS)
         }
-        Cmd::Settings => {
+        Cmd::Settings { .. } => {
             hide_console();
             gui::run().map(|_| ExitCode::SUCCESS)
         }
@@ -202,4 +206,13 @@ fn notify(summary: &str, body: &str) {
     {
         let _ = notify_rust::Notification::new().summary(summary).body(&body).appname("File Converter").show();
     }
+}
+
+#[cfg(test)]
+#[test]
+fn settings_accepts_file_manager_args() {
+    // Dolphin appends the selected files to "Configure presets…"; rejecting them meant no window.
+    let cli = Cli::try_parse_from(["file-converter", "settings", "/a b.png", "/c.png"]).unwrap();
+    assert!(matches!(cli.cmd, Some(Cmd::Settings { .. })));
+    assert!(Cli::try_parse_from(["file-converter", "settings"]).is_ok());
 }
